@@ -144,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                     obscureTxt: true.obs,
                   ),
                   SizedBox(
-                    height: Get.height * 0.02,
+                    height: Get.height * 0.03,
                   ),
                   Row(
                     children: [

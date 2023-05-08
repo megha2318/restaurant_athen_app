@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:restaurant_athen_app/screens/done_screen/done.dart';
 import 'package:restaurant_athen_app/screens/forgot_password_screen/forgot_password.dart';
 import 'package:restaurant_athen_app/screens/home_screen/home.dart';
 import 'package:restaurant_athen_app/screens/login_screen/login.dart';
 import 'package:restaurant_athen_app/screens/reset_password_screen/reset_password.dart';
+import 'package:restaurant_athen_app/screens/restaurant_athen_screen/restaurant_athen.dart';
+import 'package:restaurant_athen_app/screens/signature_screen/signature.dart';
 import 'package:restaurant_athen_app/screens/signup_screen/signup.dart';
 import 'package:restaurant_athen_app/screens/splash_screen/splash.dart';
 import 'package:restaurant_athen_app/screens/verification_screen/verification.dart';
@@ -15,6 +18,9 @@ void main() {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      localizationsDelegates: [
+        MonthYearPickerLocalizations.delegate,
+      ],
       getPages: [
         GetPage(name: AppRes.splashPage, page: () => SplashScreen()),
         GetPage(name: AppRes.loginPage, page: () => LoginScreen()),
@@ -28,6 +34,10 @@ void main() {
         GetPage(name: AppRes.donePage, page: () => DoneScreen()),
         GetPage(name: AppRes.signupPage, page: () => SignupScreen()),
         GetPage(name: AppRes.homePage, page: () => HomeScreen()),
+        GetPage(
+            name: AppRes.restaurantAthenPage,
+            page: () => RestaurantAthenScreen()),
+        GetPage(name: AppRes.signaturePage, page: () => SignatureScreen()),
       ],
     ),
   );

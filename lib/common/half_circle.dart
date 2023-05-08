@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
 
 Widget halfCircle() {
@@ -11,8 +12,8 @@ Widget halfCircle() {
       ),
       Container(
         alignment: Alignment.topRight,
-        height: 250,
-        width: 250,
+        height: Get.height * 0.68,
+        width: Get.width * 0.68,
         child: Image.asset(
           AssetRes.halfCircleImg,
           fit: BoxFit.fill,

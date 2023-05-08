@@ -1,6 +1,6 @@
 class EndPoints {
   ///---------------------------------------------- Base url ----------------------------------------------
-  static const baseUrl = '';
+  static const baseUrl = 'http://i-ora.dreamspotacademy.com/api';
 
-  ///----------------------------------- end points -----------------------------------
+  static const login = "$baseUrl/auth/login";
 }

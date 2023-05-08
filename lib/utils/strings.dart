@@ -1,5 +1,5 @@
 class Strings {
-  ///----------------------- LOGIN SCREEN ------------------------///
+  ///----------------------- LOGIN ------------------------///
   static String welcomeBack = "Welcome Back!";
   static String pleaseLoginToContinue = "Please login to continue.";
   static String userId = "User ID *";
@@ -9,7 +9,7 @@ class Strings {
   static String donTHaveAnAccount = "Don’t have an account?";
   static String signUp = " Sign Up";
 
-  ///----------------------- FORGOT PASSWORD SCREEN ------------------------///
+  ///----------------------- FORGOT PASSWORD ------------------------///
   static String forgotPassword = "Forgot Password?";
   static String forgotPasswordTxt =
       "Enter the email associated with your account and\nwe’ll send an email with instructions to reset\nyour password.";
@@ -57,4 +57,43 @@ class Strings {
   static String vacationDays = "Vacation Days";
   static String workingHoursWeek = "Working hours a week";
   static String update = "Update";
+
+  static String todayWorkDetails = "Today Work Details";
+  static String workAddress = "Work Address";
+  static String enterWorkAddress = "Enter Work Address";
+  static String hours = "Hours";
+  static String minutes = "Minutes";
+  static String enterHours = "Enter Hours";
+  static String enterMinutes = "Enter Minutes";
+  static String contactPerson = "Contact Person";
+  static String enterContactPerson = "Enter Contact Person";
+  static String enterContactNumber = "Enter Contact Number";
+  static String starttime = "Starttime";
+  static String endtime = "Enddtime";
+
+  static String myTaskForToday = "My Task for Today";
+  static String cleanTheFloor = "Clean the Floor";
+  static String cleanTheWindows = "Clean the windows";
+  static String dryCleanSheets = "Dry Clean Sheets";
+  static String cleanDesk = "Clean Desk";
+  static String paperWork = "Paper work";
+  static String lunchBreak = "Lunch Break";
+  static String cleaningEntrance = "Cleaning Entrance";
+  static String wateringAllPlants = "Watering All Plants";
+  static String cleanAllWindows = "Clean All Windows";
+  static String arrangeAllFiles = "Arrange All Files";
+  static String lightsOffAllRooms = "Lights off All Rooms";
+
+  static String requestForSignature = "Request for Signature";
+  static String optional = " (Optional)";
+  static String signatureTxt =
+      "If your task is done then for the confirmation please kindly\ntake the signature from the Admin.";
+
+  static String mainTaskList = "Main Task List";
+  static String download = "Download";
+  static String couldNotCleanTheWindowBecauseNoWindows =
+      "Could not clean the window, because no windows";
+
+  static String doneTxt =
+      "Successfully added To Work !\nKindly Login Next Day for your Workship";
 }

@@ -68,7 +68,7 @@ class _DateWidgetState extends State<DateWidget>
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
@@ -78,6 +78,9 @@ class _DateWidgetState extends State<DateWidget>
                           ? widget.dateTextStyle
                           : widget.dateTextStyle
                       : widget.dateTextStyle,
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
                 Text(DateFormat("E", widget.locale).format(widget.date),
                     // .format(widget.date)

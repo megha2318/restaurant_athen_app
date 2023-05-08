@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/color_res.dart';
 
-Widget button({required String txt, required void Function()? onTap}) {
+Widget button(
+    {required String txt,
+    required void Function()? onTap,
+    double? fontSize,
+    Color? color}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -12,11 +16,12 @@ Widget button({required String txt, required void Function()? onTap}) {
       width: Get.width,
       // margin: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
       decoration: BoxDecoration(
-          color: ColorRes.color74BDCB, borderRadius: BorderRadius.circular(99)),
+          color: color ?? ColorRes.color74BDCB,
+          borderRadius: BorderRadius.circular(99)),
       child: Text(
         txt,
         style: appTextStyle(
-          fontSize: 16,
+          fontSize: fontSize ?? 16,
         ),
       ),
     ),

@@ -6,6 +6,8 @@ class AssetRes {
   static String halfCircleImg = "${images}half_circle.png";
   static String halfCircleSmallImg = "${images}half_circle_small.png";
   static String doneImg = "${images}done.png";
+  static String houseImg = "${images}house_img.png";
+  static String pdfImg = "${images}pdf_img.png";
 
   ///_________________________ icons _______________________________///
   static String icons = "assets/icons/";
@@ -21,4 +23,8 @@ class AssetRes {
   static String phoneIcon = "${icons}phone.png";
   static String equalIcon = "${icons}equal.png";
   static String notificationIcon = "${icons}notification.png";
+  static String clockIcon = "${icons}clock.png";
+  static String searchIcon = "${icons}search.png";
+  static String deleteIcon = "${icons}delete.png";
+  static String downloadIcon = "${icons}download.png";
 }

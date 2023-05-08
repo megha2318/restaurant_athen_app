@@ -148,3 +148,91 @@ Widget textfield({
           ),
   );
 }
+
+Widget titleWithTextField({
+  String? title,
+  String? suffixImg,
+  String? hintTxt,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title.toString(),
+        style: appTextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      ),
+      SizedBox(
+        height: Get.height * 0.01,
+      ),
+      Container(
+        height: Get.height * 0.065,
+        child: TextField(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: ColorRes.backgroundColor,
+            contentPadding: const EdgeInsets.only(left: 15, right: 0),
+            // constraints:
+            //     BoxConstraints.tight(Size(Get.width, Get.height * 0.065)),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(5)),
+            hintMaxLines: 2,
+            suffixIcon: (suffixImg == null)
+                ? const SizedBox()
+                : Transform.scale(
+                    scale: 0.3,
+                    child: Image.asset(
+                      suffixImg,
+                    )),
+            hintText: hintTxt,
+            hintStyle: appTextStyle(
+                color: ColorRes.greyClr,
+                fontSize: 11,
+                fontWeight: FontWeight.w400),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget titleWithTextFieldWithoutSuffix({
+  String? title,
+  String? suffixImg,
+  String? hintTxt,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title.toString(),
+        style: appTextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      ),
+      SizedBox(
+        height: Get.height * 0.01,
+      ),
+      Container(
+        height: Get.height * 0.065,
+        child: TextField(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: ColorRes.backgroundColor,
+            contentPadding: const EdgeInsets.only(left: 15, right: 0),
+            // constraints:
+            //     BoxConstraints.tight(Size(Get.width, Get.height * 0.065)),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(5)),
+            hintMaxLines: 2,
+
+            hintText: hintTxt,
+            hintStyle: appTextStyle(
+                color: ColorRes.greyClr,
+                fontSize: 10,
+                fontWeight: FontWeight.w400),
+          ),
+        ),
+      ),
+    ],
+  );
+}

@@ -23,9 +23,11 @@ class CalenderPicker extends StatefulWidget {
   final MultiSelectionListener? multiSelectionListener;
   final int daysCount;
   final String locale;
+  final int initialMonth;
 
   // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   CalenderPicker(
+    this.initialMonth,
     this.startDate, {
     Key? key,
     this.width = 60,
@@ -93,7 +95,7 @@ class _CalenderPickerState extends State<CalenderPicker>
           itemBuilder: (context, index) {
             DateTime date;
             DateTime _date = widget.startDate.add(Duration(days: index));
-            date = DateTime(_date.year, _date.month, _date.day);
+            date = DateTime(_date.year, widget.initialMonth, _date.day);
 
             final bool isSelected = _currentDate != null
                 ? _compareDate(date, _currentDate!)

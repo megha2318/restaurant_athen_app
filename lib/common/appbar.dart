@@ -6,7 +6,7 @@ import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
 import 'package:restaurant_athen_app/utils/color_res.dart';
 
-Widget appBar({bool? isBack}) {
+Widget appBar({bool? isBack, String? flow}) {
   return Container(
     margin: EdgeInsets.only(
       top: Get.height * 0.07,
@@ -27,7 +27,9 @@ Widget appBar({bool? isBack}) {
                 mini: true,
                 elevation: 0.5,
                 onPressed: () {
-                  Get.offNamedUntil(AppRes.loginPage, (route) => false);
+                  (flow == "hm")
+                      ? Get.back()
+                      : Get.offNamedUntil(AppRes.loginPage, (route) => false);
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_rounded,
@@ -62,8 +64,11 @@ Widget appBarHome({required String title}) {
         FloatingActionButton(
           backgroundColor: ColorRes.white,
           elevation: 0,
+          heroTag: 'equal',
           mini: true,
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(AppRes.signupPage);
+          },
           child: Transform.scale(
             scale: 0.3,
             child: Image.asset(AssetRes.equalIcon),
@@ -93,6 +98,7 @@ Widget appBarHome({required String title}) {
         FloatingActionButton(
           backgroundColor: ColorRes.white,
           elevation: 0,
+          heroTag: "not",
           mini: true,
           child: Transform.scale(
             scale: 0.4,

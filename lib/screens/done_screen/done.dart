@@ -40,7 +40,11 @@ class DoneScreen extends StatelessWidget {
                   // ),
                   InkWell(
                     onTap: () {
-                      Get.offNamedUntil(AppRes.loginPage, (route) => false);
+                      (flow == "ps")
+                          ? Get.offNamedUntil(
+                              AppRes.loginPage, (route) => false)
+                          : Get.offNamedUntil(
+                              AppRes.homePage, (route) => false);
                     },
                     child: SizedBox(
                       height: 250,
@@ -65,7 +69,9 @@ class DoneScreen extends StatelessWidget {
                     height: Get.height * 0.005,
                   ),
                   Text(
-                    (flow == "ps") ? Strings.successfulPasswordTxt : "",
+                    (flow == "ps")
+                        ? Strings.successfulPasswordTxt
+                        : Strings.doneTxt,
                     textAlign: TextAlign.center,
                     style: appTextStyle(
                         fontSize: 11,

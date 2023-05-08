@@ -8,4 +8,6 @@ class AppRes {
   static String donePage = "/donePage";
   static String signupPage = "/signupPage";
   static String homePage = "/homePage";
+  static String restaurantAthenPage = "/restaurantAthenPage";
+  static String signaturePage = "/signaturePage";
 }

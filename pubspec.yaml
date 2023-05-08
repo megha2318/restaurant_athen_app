@@ -40,7 +40,8 @@ dependencies:
   google_fonts: ^4.0.4
   country_pickers: ^2.0.0
   pin_code_fields: ^7.4.0
-  image_picker:
+  # image_picker:
+  image_picker: ^0.8.1
   intl:
   weekly_date_picker: ^1.3.0
   calender_picker:
@@ -48,6 +49,10 @@ dependencies:
   syncfusion_flutter_datepicker:
   date_util: ^0.1.4
   month_year_picker:
+  signature:
+  syncfusion_flutter_signaturepad: ^19.4.56
+  dotted_border: ^2.0.0+3
+
 
 dev_dependencies:
   flutter_test:

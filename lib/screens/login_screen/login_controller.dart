@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:restaurant_athen_app/utils/app_res.dart';
+import 'package:restaurant_athen_app/api_calling/login_api.dart';
 
 class LoginController extends GetxController {
   Rx<TextEditingController> userIdCon = TextEditingController().obs;
@@ -28,11 +28,14 @@ class LoginController extends GetxController {
     dropdownVal.value = val.toString();
   }
 
-  loginOnTap() {
-    Get.offNamedUntil(AppRes.homePage, (route) => false);
+  loginOnTap() async {
+    await LoginApi.loginApi(
+      username: userIdCon.value.text,
+      password: userPasswordCon.value.text,
+    );
+
+    // Get.offNamedUntil(AppRes.homePage, (route) => false);
   }
 
-  signupOnTap() {
-    Get.toNamed(AppRes.signupPage);
-  }
+  signupOnTap() {}
 }
