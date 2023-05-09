@@ -18,7 +18,7 @@ class LoginApi {
       };
 
       http.Response? response = await HttpService.postApi(header: {
-        "Content-Type": "application/json",
+        "Accept": "application/json",
       }, url: url, body: jsonEncode(param));
       if (response != null && response.statusCode == 200) {
         //   bool? status = jsonDecode(response.body)["status"];
