@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/common/appbar.dart';
@@ -25,17 +24,83 @@ class RestaurantAthenScreen extends StatefulWidget {
 class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
   final RestaurantAthenController restaurantAthenController =
       Get.put(RestaurantAthenController());
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: drawer(),
       backgroundColor: ColorRes.backgroundColor,
       body: Padding(
         padding:
             EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
         child: Column(
           children: [
-            appBarHome(title: "Restaurant Athen"),
+            Container(
+              margin: EdgeInsets.only(
+                top: Get.height * 0.07,
+              ),
+              // padding: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
+              // height: Get.height * 0.15,
+              width: Get.width,
+              // color: ColorRes.black,
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: ColorRes.white,
+                    elevation: 0,
+                    heroTag: 'equal',
+                    mini: true,
+                    onPressed: () {
+                      _key.currentState!.openDrawer();
+                    },
+                    child: Transform.scale(
+                      scale: 0.3,
+                      child: Image.asset(AssetRes.equalIcon),
+                    ),
+                  ),
+                  Spacer(),
+                  Column(
+                    children: [
+                      SizedBox(
+                          height: 60,
+                          child: Image.asset(
+                            AssetRes.logoImg,
+                            fit: BoxFit.fitHeight,
+                          )),
+                      SizedBox(
+                        height: Get.height * 0.008,
+                      ),
+                      Text(
+                        "Restaurant Athen",
+                        style: appTextStyle(
+                          fontSize: 16,
+                        ),
+                      )
+                    ],
+                  ),
+                  Spacer(),
+                  FloatingActionButton(
+                    backgroundColor: ColorRes.white,
+                    elevation: 0,
+                    heroTag: "not",
+                    mini: true,
+                    child: Transform.scale(
+                      scale: 0.4,
+                      child: Image.asset(AssetRes.notificationIcon),
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            // appBarHome(title: "Restaurant Athen", context: context),
             SizedBox(
               height: Get.height * 0.04,
             ),
@@ -50,9 +115,10 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                       padding: EdgeInsets.only(
                           left: Get.width * 0.05,
                           right: Get.width * 0.05,
+                          bottom: Get.height * 0.02,
                           top: Get.height * 0.02),
                       width: Get.width,
-                      height: Get.height * 0.43,
+                      // height: Get.height * 0.43,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white),
@@ -135,7 +201,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                           top: Get.height * 0.02,
                           bottom: Get.height * 0.02),
                       width: Get.width,
-                      height: Get.height * 0.2,
+                      // height: Get.height * 0.2,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white),
@@ -230,9 +296,9 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                       padding: EdgeInsets.only(
                           left: Get.width * 0.05,
                           right: Get.width * 0.05,
-                          top: Get.height * 0.02),
+                          top: Get.height * 0.02,
+                          bottom: Get.height * 0.02),
                       width: Get.width,
-                      height: Get.height * 0.9999,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white),
@@ -356,9 +422,10 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                       padding: EdgeInsets.only(
                           left: Get.width * 0.05,
                           right: Get.width * 0.05,
+                          bottom: Get.height * 0.02,
                           top: Get.height * 0.02),
                       width: Get.width,
-                      height: Get.height * 0.55,
+                      // height: Get.height * 0.55,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white),
@@ -455,95 +522,15 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.05,
-                          right: Get.width * 0.05,
-                          top: Get.height * 0.02),
-                      width: Get.width,
-                      height: Get.height * 0.48,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: ColorRes.white),
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(10),
-                            padding: EdgeInsets.all(0),
-                            dashPattern: [6, 3, 6, 3],
-                            color: Colors.grey,
-                            strokeWidth: 2,
-                            strokeCap: StrokeCap.round,
-                            child: Container(
-                              height: Get.height * 0.25,
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                  color: ColorRes.backgroundColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  AssetRes.houseImg,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: Get.width * 0.05),
-                            width: Get.width,
-                            height: Get.height * 0.065,
-                            decoration: BoxDecoration(
-                                color: ColorRes.backgroundColor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              "Could not clean the window, because no windows"
-                                  .tr,
-                              style: appTextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 5,
-                                  child: button(
-                                      fontSize: 14, txt: "Edit", onTap: () {})),
-                              SizedBox(
-                                width: Get.width * 0.05,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: FloatingActionButton(
-                                  heroTag: "1st",
-                                  elevation: 0,
-                                  backgroundColor: ColorRes.backgroundColor,
-                                  onPressed: () {
-                                    widget.signature = null;
-                                    setState(() {});
-                                  },
-                                  child: Transform.scale(
-                                    scale: 0.5,
-                                    child: Image.asset(AssetRes.deleteIcon),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    restaurantAthenController.getInput(),
+                    // GetBuilder<RestaurantAthenController>(
+                    //     id: "problem",
+                    //     builder: (restaurantAthenController) => Column(
+                    //           children: [
+                    //             ...restaurantAthenController.input
+                    //                 .map((e) => e),
+                    //           ],
+                    //         )),
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
@@ -551,11 +538,12 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                       padding: EdgeInsets.only(
                           left: Get.width * 0.05,
                           right: Get.width * 0.05,
+                          bottom: Get.height * 0.02,
                           top: Get.height * 0.02),
                       width: Get.width,
-                      height: (widget.signature != null)
-                          ? Get.height * 0.68
-                          : Get.height * 0.2,
+                      // height: (widget.signature != null)
+                      //     ? Get.height * 0.68
+                      //     : Get.height * 0.2,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white),

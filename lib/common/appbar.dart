@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_athen_app/services/pref_services.dart';
 import 'package:restaurant_athen_app/utils/app_res.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
 import 'package:restaurant_athen_app/utils/color_res.dart';
+import 'package:restaurant_athen_app/utils/pref_keys.dart';
 
 Widget appBar({bool? isBack, String? flow}) {
   return Container(
@@ -27,9 +29,9 @@ Widget appBar({bool? isBack, String? flow}) {
                 mini: true,
                 elevation: 0.5,
                 onPressed: () {
-                  (flow == "hm")
-                      ? Get.back()
-                      : Get.offNamedUntil(AppRes.loginPage, (route) => false);
+                  // (flow == "hm") ?
+                  Get.back();
+                  // : Get.offNamedUntil(AppRes.loginPage, (route) => false);
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_rounded,
@@ -45,7 +47,7 @@ Widget appBar({bool? isBack, String? flow}) {
   );
 }
 
-Widget appBarHome({required String title}) {
+Widget appBarHome({required String title, required BuildContext context}) {
   return Container(
     margin: EdgeInsets.only(
       top: Get.height * 0.07,
@@ -67,7 +69,45 @@ Widget appBarHome({required String title}) {
           heroTag: 'equal',
           mini: true,
           onPressed: () {
-            Get.toNamed(AppRes.signupPage);
+            // Scaffold.of(context).openDrawer();
+
+            // showDialog(
+            //     context: context,
+            //     builder: (context) => AlertDialog(
+            //           content: Column(
+            //             children: [
+            //               SizedBox.expand(
+            //                 child: ElevatedButton(
+            //                   onPressed: () {},
+            //                   style: ElevatedButton.styleFrom(
+            //                     primary: ColorRes.color74BDCB,
+            //                   ),
+            //                   child: Text(
+            //                     "Profile",
+            //                     style: appTextStyle(
+            //                         fontSize: 14, color: ColorRes.white),
+            //                   ),
+            //                 ),
+            //               ),
+            //               SizedBox(
+            //                 height: Get.height * 0.02,
+            //               ),
+            //               SizedBox.expand(
+            //                 child: ElevatedButton(
+            //                   onPressed: () {},
+            //                   style: ElevatedButton.styleFrom(
+            //                     primary: ColorRes.color74BDCB,
+            //                   ),
+            //                   child: Text(
+            //                     "Logout",
+            //                     style: appTextStyle(
+            //                         fontSize: 14, color: ColorRes.white),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ));
           },
           child: Transform.scale(
             scale: 0.3,
@@ -107,6 +147,60 @@ Widget appBarHome({required String title}) {
           onPressed: () {},
         ),
       ],
+    ),
+  );
+}
+
+Widget drawer() {
+  return Drawer(
+    child: SafeArea(
+      child: Column(
+        children: [
+          SizedBox(
+            height: Get.height * 0.1,
+          ),
+          Container(
+            width: Get.width,
+            height: Get.height * 0.07,
+            color: ColorRes.color74BDCB,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.back();
+                Get.toNamed(AppRes.signupPage);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: ColorRes.color74BDCB,
+              ),
+              child: Text(
+                "Profile",
+                style: appTextStyle(fontSize: 16, color: ColorRes.white),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: Get.height * 0.03,
+          ),
+          Container(
+            width: Get.width,
+            height: Get.height * 0.07,
+            color: ColorRes.color74BDCB,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.back();
+                PrefService.setValue(PrefKeys.login, false);
+                Get.offNamedUntil(AppRes.loginPage, (route) => false);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: ColorRes.color74BDCB,
+              ),
+              child: Text(
+                "Logout",
+                style: appTextStyle(fontSize: 16, color: ColorRes.white),
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }

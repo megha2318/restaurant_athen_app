@@ -19,6 +19,7 @@ class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: ColorRes.backgroundColor,
       body: SizedBox(
         height: Get.height,
@@ -120,11 +121,19 @@ class VerificationScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "00:30",
-                            style: appTextStyle(
-                                color: ColorRes.color74BDCB, fontSize: 14),
+                          GetBuilder<VerificationController>(
+                            id: "timer",
+                            builder: (controller) => Text(
+                              (" ${(controller.seconds.inMinutes).toString().padLeft(2, "0")}:${(controller.seconds.inSeconds % 60).toString().padLeft(2, "0")}"),
+                              style: appTextStyle(
+                                  color: ColorRes.color74BDCB, fontSize: 14),
+                            ),
                           ),
+                          // Text(
+                          //   "00:30",
+                          //   style: appTextStyle(
+                          //       color: ColorRes.color74BDCB, fontSize: 14),
+                          // ),
                           Spacer(),
                           RichText(
                             text: TextSpan(

@@ -20,10 +20,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeController homeController = Get.put(HomeController());
-
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: drawer(),
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorRes.backgroundColor,
       body: Column(
@@ -33,7 +35,109 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: Get.width * 0.05, right: Get.width * 0.05),
             child: Column(
               children: [
-                appBarHome(title: 'Deine Einsätze'),
+                ////======================= app bar ===============================================
+                Container(
+                  margin: EdgeInsets.only(
+                    top: Get.height * 0.07,
+                  ),
+                  // padding: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
+                  // height: Get.height * 0.15,
+                  width: Get.width,
+                  // color: ColorRes.black,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      FloatingActionButton(
+                        backgroundColor: ColorRes.white,
+                        elevation: 0,
+                        heroTag: 'equal',
+                        mini: true,
+                        onPressed: () {
+                          _key.currentState!.openDrawer();
+                          // Scaffold.of(context).openDrawer();
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (context) => AlertDialog(
+                          //           content: Column(
+                          //             children: [
+                          //               SizedBox.expand(
+                          //                 child: ElevatedButton(
+                          //                   onPressed: () {},
+                          //                   style: ElevatedButton.styleFrom(
+                          //                     primary: ColorRes.color74BDCB,
+                          //                   ),
+                          //                   child: Text(
+                          //                     "Profile",
+                          //                     style: appTextStyle(
+                          //                         fontSize: 14, color: ColorRes.white),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //               SizedBox(
+                          //                 height: Get.height * 0.02,
+                          //               ),
+                          //               SizedBox.expand(
+                          //                 child: ElevatedButton(
+                          //                   onPressed: () {},
+                          //                   style: ElevatedButton.styleFrom(
+                          //                     primary: ColorRes.color74BDCB,
+                          //                   ),
+                          //                   child: Text(
+                          //                     "Logout",
+                          //                     style: appTextStyle(
+                          //                         fontSize: 14, color: ColorRes.white),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ));
+                        },
+                        child: Transform.scale(
+                          scale: 0.3,
+                          child: Image.asset(AssetRes.equalIcon),
+                        ),
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          SizedBox(
+                              height: 60,
+                              child: Image.asset(
+                                AssetRes.logoImg,
+                                fit: BoxFit.fitHeight,
+                              )),
+                          SizedBox(
+                            height: Get.height * 0.008,
+                          ),
+                          Text(
+                            "Deine Einsätze",
+                            style: appTextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
+                      ),
+                      Spacer(),
+                      FloatingActionButton(
+                        backgroundColor: ColorRes.white,
+                        elevation: 0,
+                        heroTag: "not",
+                        mini: true,
+                        child: Transform.scale(
+                          scale: 0.4,
+                          child: Image.asset(AssetRes.notificationIcon),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+                // appBarHome(title: 'Deine Einsätze', context: context),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/api_calling/login_api.dart';
+import 'package:restaurant_athen_app/common/popup.dart';
 import 'package:restaurant_athen_app/models/login_model.dart';
 import 'package:restaurant_athen_app/services/pref_services.dart';
 
@@ -10,6 +11,36 @@ class LoginController extends GetxController {
 
   RxBool checkVal = false.obs;
   RxBool isObscure = false.obs;
+
+  String errorId = "";
+  String errorPassword = "";
+
+  bool validator() {
+    idValidator();
+    passwordValidator();
+
+    if (errorId == "" && errorPassword == "") {
+      return true;
+    }
+    return false;
+  }
+
+  idValidator() {
+    if (userIdCon.value.text == "") {
+      errorId = "Please enter user id".tr;
+    } else {
+      errorId = "";
+    }
+  }
+
+  passwordValidator() {
+    if (userPasswordCon.value.text == "") {
+      errorPassword = "Please enter user id".tr;
+    } else {
+      errorPassword = "";
+    }
+  }
+
   onTapEye() {
     if (isObscure.value == false) {
       isObscure.value = true;
@@ -42,10 +73,18 @@ class LoginController extends GetxController {
 
   LoginModel loginModel = LoginModel();
   loginOnTap() async {
-    await LoginApi.loginApi(
-      username: userIdCon.value.text,
-      password: userPasswordCon.value.text,
-    );
+    if (validator()) {
+      await LoginApi.loginApi(
+        username: userIdCon.value.text,
+        password: userPasswordCon.value.text,
+      );
+    } else {
+      if (errorId != "") {
+        errorToast(errorId);
+      } else if (errorPassword != "") {
+        errorToast(errorPassword);
+      }
+    }
 
     // Get.offNamedUntil(AppRes.homePage, (route) => false);
   }

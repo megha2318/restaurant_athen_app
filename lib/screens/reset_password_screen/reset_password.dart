@@ -19,6 +19,7 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: ColorRes.backgroundColor,
       body: SizedBox(
         height: Get.height,
