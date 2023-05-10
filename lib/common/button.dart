@@ -19,7 +19,7 @@ Widget button(
           color: color ?? ColorRes.color74BDCB,
           borderRadius: BorderRadius.circular(99)),
       child: Text(
-        txt,
+        txt.tr,
         style: appTextStyle(
           fontSize: fontSize ?? 16,
         ),

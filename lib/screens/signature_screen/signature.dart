@@ -35,14 +35,14 @@ class SignatureScreen extends StatelessWidget {
               height: Get.height * 0.04,
             ),
             Text(
-              "Create Signature",
+              "Create Signature".tr,
               style: appTextStyle(fontSize: 30),
             ),
             SizedBox(
               height: Get.height * 0.008,
             ),
             Text(
-              "Please do your signature",
+              "Please do your signature".tr,
               style: appTextStyle(
                   fontSize: 14,
                   color: ColorRes.greyClr,

@@ -39,7 +39,7 @@ class HttpService {
     try {
       // String accessToken = PrefService.getString(PrefKeys.token);
       header ??= {
-        "Content-Type": "application/json",
+        "Accept": "application/json",
         /* "x-access-token": accessToken,*/
       };
 

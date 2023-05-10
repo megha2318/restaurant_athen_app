@@ -61,7 +61,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                           Row(
                             children: [
                               Text(
-                                "Today Work Details",
+                                "Today Work Details".tr,
                                 style: appTextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
@@ -143,7 +143,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Timerecording",
+                            "Timerecording".tr,
                             style: appTextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
@@ -173,7 +173,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                         height: Get.height * 0.005,
                                       ),
                                       Text(
-                                        Strings.starttime,
+                                        Strings.starttime.tr,
                                         style: appTextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -208,7 +208,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                         height: Get.height * 0.005,
                                       ),
                                       Text(
-                                        Strings.endtime,
+                                        Strings.endtime.tr,
                                         style: appTextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -240,7 +240,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "My Task for Today",
+                            "My Task for Today".tr,
                             style: appTextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
@@ -368,7 +368,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                           Row(
                             children: [
                               Text(
-                                Strings.mainTaskList,
+                                Strings.mainTaskList.tr,
                                 style: appTextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
@@ -421,7 +421,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                             width: Get.width * 0.008,
                                           ),
                                           Text(
-                                            Strings.download,
+                                            Strings.download.tr,
                                             style: appTextStyle(
                                               fontSize: 14,
                                             ),
@@ -503,7 +503,8 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                 color: ColorRes.backgroundColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Text(
-                              "Could not clean the window, because no windows",
+                              "Could not clean the window, because no windows"
+                                  .tr,
                               style: appTextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 10,
@@ -565,14 +566,14 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: (Strings.requestForSignature),
+                                  text: (Strings.requestForSignature.tr),
                                   style: appTextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: (Strings.optional),
+                                  text: (Strings.optional.tr),
                                   style: appTextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -585,7 +586,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                             height: Get.height * 0.005,
                           ),
                           Text(
-                            Strings.signatureTxt,
+                            Strings.signatureTxt.tr,
                             style: appTextStyle(
                                 color: ColorRes.greyClr,
                                 fontSize: 10,

@@ -7,6 +7,15 @@ class HomeController extends GetxController {
 
   void calenderOnTap() {}
   RxBool isSearch = false.obs;
+  RxBool searchIcon = false.obs;
+
+  onTapSearchIcon() {
+    if (searchIcon.value == true) {
+      searchIcon.value = false;
+    } else {
+      searchIcon.value = true;
+    }
+  }
 
   onAddTap() {
     if (isSearch.value == true) {

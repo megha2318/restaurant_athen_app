@@ -1,5 +1,3 @@
-import 'package:country_pickers/country.dart';
-import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/common/appbar.dart';
@@ -43,7 +41,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         height: Get.height * 0.018,
                       ),
                       Text(
-                        Strings.forgotPassword,
+                        Strings.forgotPassword.tr,
                         style: appTextStyle(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),
@@ -51,7 +49,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         height: Get.height * 0.002,
                       ),
                       Text(
-                        Strings.forgotPasswordTxt,
+                        Strings.forgotPasswordTxt.tr,
                         style: appTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -63,13 +61,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                       textfield(
                         prefixImg: AssetRes.emailIcon,
                         controller: forgotPasswordController.emailIdCon.value,
-                        hintTxt: Strings.emailId,
+                        hintTxt: Strings.emailId.tr,
                       ),
                       SizedBox(
                         height: Get.height * 0.33,
                       ),
                       button(
-                          txt: Strings.send,
+                          txt: Strings.send.tr,
                           onTap: () {
                             forgotPasswordController.sendOnTap();
                           }),
@@ -87,33 +85,3 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 }
-
-Widget _buildDropdownItem(Country country) => Container(
-      alignment: Alignment.center,
-      width: Get.width * 0.35,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ClipRRect(
-              borderRadius: BorderRadius.circular(99),
-              child: Container(
-                  height: 40,
-                  width: 40,
-                  child: CountryPickerUtils.getDefaultFlagImage(
-                    country,
-                  ))),
-          SizedBox(
-            width: 8.0,
-          ),
-          Text("${country.name}"),
-          SizedBox(
-            width: 8.0,
-          ),
-          Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: ColorRes.color74BDCB,
-          )
-        ],
-      ),
-    );

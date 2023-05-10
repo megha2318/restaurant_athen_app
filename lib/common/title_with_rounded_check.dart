@@ -23,7 +23,7 @@ Widget titleWithRoundedCheck({
     child: Row(
       children: [
         Text(
-          title,
+          title.tr,
           style: appTextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,

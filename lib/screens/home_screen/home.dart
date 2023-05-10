@@ -1,16 +1,15 @@
 import 'package:calender_picker/date_picker_widget.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:month_year_picker/month_year_picker.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:restaurant_athen_app/common/appbar.dart';
 import 'package:restaurant_athen_app/screens/home_screen/home_controller.dart';
 import 'package:restaurant_athen_app/utils/app_res.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
 import 'package:restaurant_athen_app/utils/color_res.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorRes.backgroundColor,
@@ -47,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${homeController.month.value}, ${homeController.getDate.value}',
+                            '${homeController.month.value.tr}, ${homeController.getDate.value}',
                             style: appTextStyle(
                               fontSize: 30,
                             ),
@@ -56,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: Get.height * 0.005,
                           ),
                           Text(
-                            '3 Objects today',
+                            '3 Objects today'.tr,
                             style: appTextStyle(
                               fontSize: 14,
                               color: ColorRes.color74BDCB,
@@ -68,12 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Spacer(),
                     InkWell(
                       onTap: () async {
-                        final selected = await showMonthYearPicker(
-                          context: context,
-                          initialDate: DateTime.now(),
+                        final selected = await showMonthPicker(
                           firstDate: DateTime(2019),
                           lastDate: DateTime(2029),
+                          context: context,
+                          initialDate: DateTime.now(),
                         );
+                        // final selected = await showMonthYearPicker(
+                        //   initialMonthYearPickerMode: MonthYearPickerMode.month,
+                        //   context: context,
+                        //   initialDate: DateTime.now(),
+                        //   firstDate: DateTime(2019),
+                        //   lastDate: DateTime(2029),
+                        // );
 
                         if (selected != null) {
                           homeController.getMonth.value = selected.month;
@@ -114,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: ColorRes.lightRedClr,
                               shape: BoxShape.circle),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Transform.scale(
                               scale: 0.6,
                               child: Image.asset(
@@ -200,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SizedBox(
                   height: Get.height * 0.48,
                   child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     child: Column(
                       children: [
                         ...List.generate(
@@ -261,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: 2,
 
                                             decoration: BoxDecoration(
-                                              gradient: LinearGradient(
+                                              gradient: const LinearGradient(
                                                   begin: Alignment.topRight,
                                                   end: Alignment.bottomLeft,
                                                   colors: [
@@ -327,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Restaurant Athens",
+                                                  "Restaurant Athens".tr,
                                                   style: appTextStyle(
                                                       fontSize: 15),
                                                 ),
@@ -335,7 +340,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   text: TextSpan(
                                                     children: [
                                                       TextSpan(
-                                                        text: ("Key Number: "),
+                                                        text:
+                                                            ("Key Number: ".tr),
                                                         style: appTextStyle(
                                                           color:
                                                               ColorRes.greyClr,
@@ -362,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   text: TextSpan(
                                                     children: [
                                                       TextSpan(
-                                                        text: ("Hours: "),
+                                                        text: ("Hours: ".tr),
                                                         style: appTextStyle(
                                                           color:
                                                               ColorRes.greyClr,
@@ -387,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ],
                                             ),
-                                            Spacer(),
+                                            const Spacer(),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
@@ -405,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       width: Get.width * 0.008,
                                                     ),
                                                     Text(
-                                                      "At",
+                                                      "At".tr,
                                                       style: appTextStyle(
                                                           fontSize: 11,
                                                           fontWeight:
@@ -424,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ],
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Container(
                                           height: 40,
                                           padding: EdgeInsets.only(
@@ -441,17 +447,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                "Empty Str.12, 33415 London",
+                                                "Empty Str.12, 33415 London".tr,
                                                 style: appTextStyle(
                                                     fontSize: 10,
                                                     fontWeight:
                                                         FontWeight.w400),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               Container(
                                                 height: 25,
                                                 width: 25,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   color: ColorRes.white,
                                                   shape: BoxShape.circle,
                                                 ),
@@ -488,9 +494,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Text(
-                                "Choose additional Object for the day",
+                                "Choose additional Object for the day".tr,
                                 style: appTextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w600),
+                                    fontSize: 11, fontWeight: FontWeight.w600),
                               ),
                               const Spacer(),
                               FloatingActionButton(
@@ -500,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () {
                                   homeController.onAddTap();
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.add,
                                   color: ColorRes.color74BDCB,
                                 ),
@@ -518,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Search for Object",
+                                          "Search for Object".tr,
                                           style: appTextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),
@@ -544,25 +550,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderSide: BorderSide.none,
                                             ),
                                             suffixIcon: IconButton(
-                                                onPressed: () {},
-                                                icon:
-                                                    // (homeController.searchCon
-                                                    //         .value.text.isNotEmpty)
-                                                    //     ?
-                                                    const Icon(
-                                                  Icons
-                                                      .keyboard_arrow_up_rounded,
-                                                  color: ColorRes.color74BDCB,
-                                                  size: 30,
-                                                )
-                                                // : const Icon(
-                                                //     Icons
-                                                //         .keyboard_arrow_down_rounded,
-                                                //     color: ColorRes
-                                                //         .color74BDCB,
-                                                //     size: 30,
-                                                //   ),
-                                                ),
+                                              onPressed: () {
+                                                homeController
+                                                    .onTapSearchIcon();
+                                              },
+                                              icon:
+                                                  // (homeController.searchCon
+                                                  //         .value.text.isNotEmpty)
+                                                  //     ?
+                                                  Obx(() => (homeController
+                                                              .searchIcon
+                                                              .value ==
+                                                          true)
+                                                      ? const Icon(
+                                                          Icons
+                                                              .keyboard_arrow_up_rounded,
+                                                          color: ColorRes
+                                                              .color74BDCB,
+                                                          size: 30,
+                                                        )
+                                                      : const Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down_rounded,
+                                                          color: ColorRes
+                                                              .color74BDCB,
+                                                          size: 30,
+                                                        )),
+                                            ),
                                             prefixIcon: Transform.scale(
                                               scale: 0.3,
                                               child: Image.asset(
@@ -572,83 +586,104 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
                                             ),
-                                            hintText: "Search here"),
+                                            hintText: "Search here".tr),
                                       ),
                                     ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.05,
-                                          right: Get.width * 0.05),
-                                      width: Get.width,
-                                      height: Get.height * 0.08,
-                                      decoration: BoxDecoration(
-                                          color: ColorRes.white,
-                                          border: Border.all(
-                                              color: ColorRes.backgroundColor,
-                                              width: 2),
-                                          borderRadius: const BorderRadius.only(
-                                              bottomLeft: Radius.circular(20),
-                                              bottomRight:
-                                                  Radius.circular(20))),
-                                      child: Row(
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Restaurant Athens",
-                                                style:
-                                                    appTextStyle(fontSize: 12),
-                                              ),
-                                              RichText(
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: ("Object ID: "),
-                                                      style: appTextStyle(
-                                                        color: ColorRes.greyClr,
-                                                        fontSize: 9,
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                    Obx(
+                                      () => (homeController.searchIcon.value ==
+                                              true)
+                                          ? Container(
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.only(
+                                                  left: Get.width * 0.05,
+                                                  right: Get.width * 0.05),
+                                              width: Get.width,
+                                              height: Get.height * 0.08,
+                                              decoration: BoxDecoration(
+                                                  color: ColorRes.white,
+                                                  border: Border.all(
+                                                      color: ColorRes
+                                                          .backgroundColor,
+                                                      width: 2),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  20),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  20))),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "Restaurant Athens".tr,
+                                                        style: appTextStyle(
+                                                            fontSize: 12),
                                                       ),
-                                                    ),
-                                                    TextSpan(
-                                                      text: ('12356'),
-                                                      recognizer:
-                                                          TapGestureRecognizer()
-                                                            ..onTap = () {},
-                                                      style: appTextStyle(
-                                                        fontSize: 9,
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                                      RichText(
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text:
+                                                                  ("Object ID: "),
+                                                              style:
+                                                                  appTextStyle(
+                                                                color: ColorRes
+                                                                    .greyClr,
+                                                                fontSize: 9,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: ('12356'),
+                                                              recognizer:
+                                                                  TapGestureRecognizer()
+                                                                    ..onTap =
+                                                                        () {},
+                                                              style:
+                                                                  appTextStyle(
+                                                                fontSize: 9,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  SizedBox(
+                                                    height: 20,
+                                                    width: 20,
+                                                    child: Checkbox(
+                                                        fillColor:
+                                                            MaterialStateProperty
+                                                                .all(ColorRes
+                                                                    .color74BDCB),
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        99)),
+                                                        value: true,
+                                                        onChanged: (val) {}),
+                                                  )
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          SizedBox(
-                                            height: 20,
-                                            width: 20,
-                                            child: Checkbox(
-                                                fillColor:
-                                                    MaterialStateProperty.all(
-                                                        ColorRes.color74BDCB),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            99)),
-                                                value: true,
-                                                onChanged: (val) {}),
-                                          )
-                                        ],
-                                      ),
+                                            )
+                                          : SizedBox(),
                                     ),
                                   ],
                                 )
@@ -679,21 +714,5 @@ class _HomeScreenState extends State<HomeScreen> {
       // ignore: avoid_print
       print(data);
     });
-  }
-
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    if (args.value is PickerDateRange) {
-      setState(() {
-        // dateTime = args.value.startDate;
-
-        if (args.value.endDate != null) {
-          different(first: args.value.startDate, last: args.value.endDate);
-          // ignore: avoid_print
-          print(args.value.startDate);
-          // ignore: avoid_print
-          print(args.value.endDate);
-        }
-      });
-    }
   }
 }

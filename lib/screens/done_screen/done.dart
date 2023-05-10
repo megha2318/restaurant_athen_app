@@ -60,8 +60,8 @@ class DoneScreen extends StatelessWidget {
                   ),
                   Text(
                     (flow == "ps")
-                        ? Strings.yaahSuccessful
-                        : Strings.doneSuccessful,
+                        ? Strings.yaahSuccessful.tr
+                        : Strings.doneSuccessful.tr,
                     textAlign: TextAlign.center,
                     style: appTextStyle(fontSize: 25),
                   ),
@@ -70,8 +70,8 @@ class DoneScreen extends StatelessWidget {
                   ),
                   Text(
                     (flow == "ps")
-                        ? Strings.successfulPasswordTxt
-                        : Strings.doneTxt,
+                        ? Strings.successfulPasswordTxt.tr
+                        : Strings.doneTxt.tr,
                     textAlign: TextAlign.center,
                     style: appTextStyle(
                         fontSize: 11,

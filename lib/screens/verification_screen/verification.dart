@@ -41,12 +41,12 @@ class VerificationScreen extends StatelessWidget {
                         height: Get.height * 0.018,
                       ),
                       Text(
-                        Strings.enterDigitsCode,
+                        Strings.enterDigitsCode.tr,
                         style: appTextStyle(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        Strings.enterDigitsCodeTxt,
+                        Strings.enterDigitsCodeTxt.tr,
                         style: appTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -130,7 +130,7 @@ class VerificationScreen extends StatelessWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: (Strings.notReceived),
+                                  text: (Strings.notReceived.tr),
                                   style: appTextStyle(
                                     fontSize: 14,
                                     color: ColorRes.greyClr,
@@ -138,7 +138,7 @@ class VerificationScreen extends StatelessWidget {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: (Strings.resend),
+                                  text: (Strings.resend.tr),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       ///===== resend ========///

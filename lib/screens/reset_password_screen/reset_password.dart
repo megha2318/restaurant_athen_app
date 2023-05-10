@@ -41,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         height: Get.height * 0.02,
                       ),
                       Text(
-                        Strings.resetPassword,
+                        Strings.resetPassword.tr,
                         style: appTextStyle(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),
@@ -60,7 +60,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.atLeastCharactersInLength,
+                            Strings.atLeastCharactersInLength.tr,
                             style: appTextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
                           )
@@ -84,7 +84,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.itsBetterToHave,
+                            Strings.itsBetterToHave.tr,
                             style: appTextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
                           )
@@ -105,7 +105,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.upperLowerCase,
+                            Strings.upperLowerCase.tr,
                             style: appTextStyle(
                                 color: ColorRes.greyClr,
                                 fontSize: 11,
@@ -128,7 +128,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.symbol,
+                            Strings.symbol.tr,
                             style: appTextStyle(
                                 color: ColorRes.greyClr,
                                 fontSize: 11,
@@ -151,7 +151,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.aLongerPassword,
+                            Strings.aLongerPassword.tr,
                             style: appTextStyle(
                                 color: ColorRes.greyClr,
                                 fontSize: 11,
@@ -219,7 +219,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               // : const SizedBox(),
-                              hintText: Strings.newPassword,
+                              hintText: Strings.newPassword.tr,
                               hintStyle: appTextStyle(
                                   fontSize: 14,
                                   color: ColorRes.greyClr,
@@ -287,7 +287,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               // : const SizedBox(),
-                              hintText: Strings.reEnterNewPassword,
+                              hintText: Strings.reEnterNewPassword.tr,
                               hintStyle: appTextStyle(
                                   fontSize: 14,
                                   color: ColorRes.greyClr,
@@ -312,7 +312,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.logoutFromAll,
+                            Strings.logoutFromAll.tr,
                             style: appTextStyle(
                                 fontSize: 12, fontWeight: FontWeight.w400),
                           ),
@@ -336,7 +336,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             width: Get.width * 0.02,
                           ),
                           Text(
-                            Strings.saveDevice,
+                            Strings.saveDevice.tr,
                             style: appTextStyle(
                                 fontSize: 12, fontWeight: FontWeight.w400),
                           ),
@@ -346,7 +346,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         height: Get.height * 0.15,
                       ),
                       button(
-                          txt: Strings.confirm,
+                          txt: Strings.confirm.tr,
                           onTap: () {
                             resetPasswordController.confirmOnTap();
                           }),

@@ -43,7 +43,7 @@ class SignupScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Strings.myProfile,
+                          Strings.myProfile.tr,
                           style: appTextStyle(
                               fontSize: 30, fontWeight: FontWeight.w700),
                         ),
@@ -83,6 +83,7 @@ class SignupScreen extends StatelessWidget {
                                       height: 30,
                                       width: 30,
                                       child: FloatingActionButton(
+                                        heroTag: "addImg",
                                         backgroundColor: ColorRes.color74BDCB,
                                         elevation: 0,
                                         mini: true,
@@ -114,7 +115,7 @@ class SignupScreen extends StatelessWidget {
                                                           color:
                                                               ColorRes.white),
                                                       title: Text(
-                                                        "Camera",
+                                                        "Camera".tr,
                                                         style: appTextStyle(
                                                             fontSize: 16,
                                                             color:
@@ -139,7 +140,7 @@ class SignupScreen extends StatelessWidget {
                                                         color: ColorRes.white,
                                                       ),
                                                       title: Text(
-                                                        "Gallery",
+                                                        "Gallery".tr,
                                                         style: appTextStyle(
                                                             fontSize: 16,
                                                             color:
@@ -251,7 +252,7 @@ class SignupScreen extends StatelessWidget {
 
                                     } else {}
                                   },
-                                  child: textfield(
+                                  child: textFieldWithoutSuffix(
                                       isOnTapTxtFld: true,
                                       prefixImg: AssetRes.calenderIcon,
                                       hintTxt: Strings.joinDate,
@@ -265,7 +266,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 1,
-                              child: textfield(
+                              child: textFieldWithoutSuffix(
                                   prefixImg: AssetRes.employeeIcon,
                                   hintTxt: Strings.vacationDays,
                                   controller:
@@ -304,7 +305,7 @@ class SignupScreen extends StatelessWidget {
 
                                     } else {}
                                   },
-                                  child: textfield(
+                                  child: textFieldWithoutSuffix(
                                       prefixImg: AssetRes.calenderIcon,
                                       hintTxt: Strings.employeeNr,
                                       controller:
@@ -317,7 +318,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 1,
-                              child: textfield(
+                              child: textFieldWithoutSuffix(
                                   prefixImg: AssetRes.employeeIcon,
                                   hintTxt: Strings.workingHoursWeek,
                                   controller:

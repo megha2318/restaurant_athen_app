@@ -47,12 +47,12 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Strings.welcomeBack,
+                          Strings.welcomeBack.tr,
                           style: appTextStyle(
                               fontSize: 30, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          Strings.pleaseLoginToContinue,
+                          Strings.pleaseLoginToContinue.tr,
                           style: appTextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                                       SizedBox(
                                         width: Get.width * 0.02,
                                       ),
-                                      Text(items),
+                                      Text(items.tr),
                                     ],
                                   ),
                                 );
@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                         textfield(
                           prefixImg: AssetRes.userIcon,
                           controller: loginController.userIdCon.value,
-                          hintTxt: Strings.userId,
+                          hintTxt: Strings.userId.tr,
                         ),
                         SizedBox(
                           height: Get.height * 0.03,
@@ -147,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                           },
                           prefixImg: AssetRes.passwordIcon,
                           controller: loginController.userPasswordCon.value,
-                          hintTxt: Strings.userPassword,
+                          hintTxt: Strings.userPassword.tr,
                           isSuffix: true,
                           obscureTxt: true.obs,
                         ),
@@ -165,7 +165,7 @@ class LoginScreen extends StatelessWidget {
                                   }),
                             ),
                             Text(
-                              Strings.rememberMe,
+                              Strings.rememberMe.tr,
                               style: appTextStyle(
                                   fontSize: 12, fontWeight: FontWeight.w400),
                             ),
@@ -175,7 +175,7 @@ class LoginScreen extends StatelessWidget {
                                 Get.toNamed(AppRes.forgotPasswordPage);
                               },
                               child: Text(
-                                Strings.forgotPassword,
+                                Strings.forgotPassword.tr,
                                 style: appTextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w600),
                               ),
@@ -186,7 +186,7 @@ class LoginScreen extends StatelessWidget {
                           height: Get.height * 0.15,
                         ),
                         button(
-                            txt: Strings.logIn,
+                            txt: Strings.logIn.tr,
                             onTap: () {
                               loginController.loginOnTap();
                             }),
@@ -200,14 +200,14 @@ class LoginScreen extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: (Strings.donTHaveAnAccount),
+                                    text: (Strings.donTHaveAnAccount.tr),
                                     style: appTextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   TextSpan(
-                                    text: (Strings.signUp),
+                                    text: (Strings.signUp.tr),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         // PrefService.setValue(PrefKeys.isLogin, true);
