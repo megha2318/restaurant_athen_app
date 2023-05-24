@@ -14,10 +14,10 @@ class SmartLoader extends StatelessWidget {
     return Expanded(
       child: Center(
         child: Platform.isIOS
-            ? CupertinoActivityIndicator(
+            ? const CupertinoActivityIndicator(
                 color: ColorRes.color74BDCB,
               )
-            : CircularProgressIndicator(
+            : const CircularProgressIndicator(
                 color: ColorRes.color74BDCB,
               ),
       ),
@@ -32,10 +32,10 @@ class SmallLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Platform.isIOS
-          ? CupertinoActivityIndicator(
+          ? const CupertinoActivityIndicator(
               color: ColorRes.color74BDCB,
             )
-          : CircularProgressIndicator(
+          : const CircularProgressIndicator(
               color: ColorRes.color74BDCB,
             ),
     );
@@ -52,10 +52,10 @@ class FullScreenLoader extends StatelessWidget {
       width: Get.width,
       child: Center(
         child: Platform.isIOS
-            ? CupertinoActivityIndicator(
+            ? const CupertinoActivityIndicator(
                 color: ColorRes.color74BDCB,
               )
-            : CircularProgressIndicator(
+            : const CircularProgressIndicator(
                 color: ColorRes.color74BDCB,
               ),
       ),

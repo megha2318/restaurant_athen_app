@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_athen_app/api_calling/dashboard_obj_api.dart';
+import 'package:restaurant_athen_app/models/dashboard_obj_model.dart';
+import 'package:restaurant_athen_app/models/single_obj_model.dart';
+import 'package:restaurant_athen_app/models/task_list_model.dart';
+import 'package:restaurant_athen_app/models/work_list_model.dart';
 
 class HomeController extends GetxController {
   RxInt getMonth = DateTime.now().month.obs;
+  RxInt getYear = DateTime.now().year.obs;
   Rx<TextEditingController> searchCon = TextEditingController().obs;
 
   void calenderOnTap() {}
@@ -66,4 +72,18 @@ class HomeController extends GetxController {
   };
 
   RxInt? monthInWord;
+  RxBool loader = false.obs;
+  Rx<DashboardObjModel> dashboardObjModel = DashboardObjModel().obs;
+  Rx<WorkListModel> workListModel = WorkListModel().obs;
+  Rx<TaskListModel> taskListModel = TaskListModel().obs;
+  Rx<SingleObjModel> singleObjModel = SingleObjModel().obs;
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    dashboardObjModel.value = await DashboardObjApi.dashboardObjApi();
+
+    print(dashboardObjModel.value);
+  }
 }

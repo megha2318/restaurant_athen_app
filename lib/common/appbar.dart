@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_athen_app/api_calling/profile_api.dart';
+import 'package:restaurant_athen_app/screens/signup_screen/signup_controller.dart';
 import 'package:restaurant_athen_app/services/pref_services.dart';
 import 'package:restaurant_athen_app/utils/app_res.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
@@ -68,47 +70,7 @@ Widget appBarHome({required String title, required BuildContext context}) {
           elevation: 0,
           heroTag: 'equal',
           mini: true,
-          onPressed: () {
-            // Scaffold.of(context).openDrawer();
-
-            // showDialog(
-            //     context: context,
-            //     builder: (context) => AlertDialog(
-            //           content: Column(
-            //             children: [
-            //               SizedBox.expand(
-            //                 child: ElevatedButton(
-            //                   onPressed: () {},
-            //                   style: ElevatedButton.styleFrom(
-            //                     primary: ColorRes.color74BDCB,
-            //                   ),
-            //                   child: Text(
-            //                     "Profile",
-            //                     style: appTextStyle(
-            //                         fontSize: 14, color: ColorRes.white),
-            //                   ),
-            //                 ),
-            //               ),
-            //               SizedBox(
-            //                 height: Get.height * 0.02,
-            //               ),
-            //               SizedBox.expand(
-            //                 child: ElevatedButton(
-            //                   onPressed: () {},
-            //                   style: ElevatedButton.styleFrom(
-            //                     primary: ColorRes.color74BDCB,
-            //                   ),
-            //                   child: Text(
-            //                     "Logout",
-            //                     style: appTextStyle(
-            //                         fontSize: 14, color: ColorRes.white),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ));
-          },
+          onPressed: () {},
           child: Transform.scale(
             scale: 0.3,
             child: Image.asset(AssetRes.equalIcon),
@@ -151,53 +113,133 @@ Widget appBarHome({required String title, required BuildContext context}) {
   );
 }
 
+SignupController signupController = Get.put(SignupController());
+
 Widget drawer() {
   return Drawer(
     child: SafeArea(
       child: Column(
         children: [
-          SizedBox(
-            height: Get.height * 0.1,
-          ),
-          Container(
-            width: Get.width,
-            height: Get.height * 0.07,
-            color: ColorRes.color74BDCB,
-            child: ElevatedButton(
-              onPressed: () {
-                Get.back();
-                Get.toNamed(AppRes.signupPage);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: ColorRes.color74BDCB,
-              ),
-              child: Text(
-                "Profile",
-                style: appTextStyle(fontSize: 16, color: ColorRes.white),
-              ),
+          // SizedBox(
+          //   height: Get.height * 0.1,
+          // ),
+          Padding(
+            padding: EdgeInsets.only(right: Get.width * 0.05),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.close),
+                ),
+              ],
             ),
           ),
           SizedBox(
             height: Get.height * 0.03,
           ),
+          SizedBox(
+              height: 80,
+              child: Image.asset(
+                AssetRes.logoImg,
+                fit: BoxFit.fitHeight,
+              )),
+          SizedBox(
+            height: Get.height * 0.1,
+          ),
           Container(
+            padding: EdgeInsets.only(
+                left: Get.width * 0.05, right: Get.width * 0.05),
             width: Get.width,
             height: Get.height * 0.07,
-            color: ColorRes.color74BDCB,
-            child: ElevatedButton(
-              onPressed: () {
-                Get.back();
-                PrefService.setValue(PrefKeys.login, false);
-                Get.offNamedUntil(AppRes.loginPage, (route) => false);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: ColorRes.color74BDCB,
-              ),
-              child: Text(
-                "Logout",
-                style: appTextStyle(fontSize: 16, color: ColorRes.white),
-              ),
-            ),
+            color: ColorRes.backgroundColor.withOpacity(0.8),
+            child: InkWell(
+                onTap: () async {
+                  Get.back();
+                  signupController.profileModel.value =
+                      await ProfileApi.profileApi();
+
+                  signupController.firstNameCon.value.text =
+                      signupController.profileModel.value.firstName ?? "";
+                  signupController.nameCon.value.text =
+                      signupController.profileModel.value.lastName ?? "";
+                  signupController.userNameCon.value.text =
+                      signupController.profileModel.value.username ?? "";
+                  signupController.emailIdCon.value.text =
+                      signupController.profileModel.value.email ?? "";
+                  signupController.contactNumCon.value.text =
+                      signupController.profileModel.value.phoneNumber ?? "";
+                  signupController.addressCon.value.text =
+                      signupController.profileModel.value.address ?? "";
+                  signupController.postCodeCon.value.text =
+                      signupController.profileModel.value.zipcode ?? "";
+                  signupController.city.value.text =
+                      signupController.profileModel.value.cityName ?? "";
+                  signupController.joinDateCon.value.text = signupController
+                      .profileModel.value.joinDate
+                      .toString()
+                      .split(' ')[0];
+                  signupController.vacationDaysCon.value.text = signupController
+                          .profileModel.value.amountOfVacationDays ??
+                      "";
+                  signupController.empNrCon.value.text =
+                      signupController.profileModel.value.employeeNumber ?? "";
+                  signupController.workingHoursCon.value.text =
+                      signupController.profileModel.value.amountOfHoursWork ??
+                          "";
+
+                  print(
+                      "================================ PROFILE IMG ${signupController.profileModel.value.profile}");
+
+                  signupController.imageUrl =
+                      signupController.profileModel.value.profile ?? "";
+
+                  // signupController.list = await CityListApi.cityListApi();
+
+                  Get.toNamed(AppRes.signupPage);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.person_outline_rounded),
+                    SizedBox(
+                      width: Get.width * 0.05,
+                    ),
+                    Text(
+                      "Profile",
+                      style: appTextStyle(fontSize: 16, color: ColorRes.black),
+                    ),
+                  ],
+                )),
+          ),
+          SizedBox(
+            height: Get.height * 0.03,
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                left: Get.width * 0.05, right: Get.width * 0.05),
+            width: Get.width,
+            height: Get.height * 0.07,
+            color: ColorRes.backgroundColor.withOpacity(0.8),
+            child: InkWell(
+                onTap: () async {
+                  Get.back();
+                  PrefService.setValue(PrefKeys.login, false);
+                  Get.offNamedUntil(AppRes.loginPage, (route) => false);
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.logout_rounded),
+                    SizedBox(
+                      width: Get.width * 0.05,
+                    ),
+                    Text(
+                      "logoutBtn".tr,
+                      style: appTextStyle(fontSize: 16, color: ColorRes.black),
+                    ),
+                  ],
+                )),
           ),
         ],
       ),

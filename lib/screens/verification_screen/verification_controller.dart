@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/api_calling/otp_api.dart';
+import 'package:restaurant_athen_app/api_calling/resend_otp_api.dart';
 import 'package:restaurant_athen_app/common/popup.dart';
+import 'package:restaurant_athen_app/models/resend_otp_model.dart';
 import 'package:restaurant_athen_app/services/pref_services.dart';
 
 class VerificationController extends GetxController {
   Rx<TextEditingController> verCon = TextEditingController().obs;
 
   String errorOtp = "";
-
+  RxBool loader = false.obs;
   bool validator() {
     otpValidation();
     if (errorOtp == "") {
@@ -29,8 +31,10 @@ class VerificationController extends GetxController {
 
   continueOnTap() async {
     if (validator()) {
+      loader.value = true;
       await OtpApi.otpApi(
           email: PrefService.getString("email"), otp: verCon.value.text);
+      loader.value = false;
     } else {
       if (errorOtp != "") {
         errorToast(errorOtp);
@@ -63,8 +67,10 @@ class VerificationController extends GetxController {
     update(['timer']);
   }
 
-  resendOtpOnTap() {
-    flutterToast("Otp sent successfully");
+  ResendOtpModel resendOtpModel = ResendOtpModel();
+  resendOtpOnTap(String email) async {
+    resendOtpModel = await ResendOtpApi.resendOtpApi(email: email);
+    // flutterToast("Otp sent successfully");
     startTimer();
   }
 

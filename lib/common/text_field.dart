@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/screens/login_screen/login_controller.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
@@ -19,7 +20,8 @@ Widget textfield({
   bool? isOnTapTxtFld,
   required TextEditingController controller,
 }) {
-  return SizedBox(
+  return Container(
+    alignment: Alignment.center,
     height: Get.height * 0.07,
     width: Get.width,
     child: (obscureTxt?.value == null)
@@ -36,15 +38,17 @@ Widget textfield({
             // expands: true,
             // maxLines: 1,
             // minLines: 1,
+
+            style: appTextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            maxLines: 2,
+            minLines: 1,
             decoration: InputDecoration(
                 filled: true,
                 enabled: (isOnTapTxtFld == true) ? false : true,
                 fillColor: ColorRes.white,
-                contentPadding: const EdgeInsets.only(
-                  top: 20,
-                ),
-                constraints:
-                    BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
+                contentPadding: const EdgeInsets.all(0),
+                // constraints:
+                //     BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(99)),
@@ -81,6 +85,7 @@ Widget textfield({
                         ),
                       )
                     : const SizedBox(),
+                hintMaxLines: 2,
                 hintText: hintTxt.toString().tr,
                 hintStyle: appTextStyle(
                     fontSize: 14,
@@ -90,18 +95,19 @@ Widget textfield({
         : Obx(
             () => TextField(
               controller: controller,
-              obscureText: (obscureTxt?.value == null)
-                  ? false
-                  : (foreye?.value == false)
+              obscureText: (obscureTxt?.value == true)
+                  ? (foreye?.value == false)
                       ? true
-                      : false,
+                      : false
+                  : false,
+              style: appTextStyle(fontSize: 14, fontWeight: FontWeight.w400),
               textAlignVertical: TextAlignVertical.center,
+              minLines: 1,
+              // maxLines: 2,
               decoration: InputDecoration(
                   filled: true,
                   fillColor: ColorRes.white,
-                  contentPadding: const EdgeInsets.only(
-                    top: 20,
-                  ),
+                  contentPadding: const EdgeInsets.all(0),
                   constraints:
                       BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
                   border: OutlineInputBorder(
@@ -175,15 +181,13 @@ Widget textFieldWithoutSuffix({
                     : false,
             textAlignVertical: TextAlignVertical.center,
             // expands: true,
-            // maxLines: 1,
-            // minLines: 1,
+            maxLines: 2,
+            minLines: 1,
             decoration: InputDecoration(
                 filled: true,
                 enabled: (isOnTapTxtFld == true) ? false : true,
                 fillColor: ColorRes.white,
-                contentPadding: const EdgeInsets.only(
-                  top: 20,
-                ),
+                contentPadding: const EdgeInsets.all(0),
                 constraints:
                     BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
                 border: OutlineInputBorder(
@@ -271,6 +275,7 @@ Widget titleWithTextField({
   String? title,
   String? suffixImg,
   String? hintTxt,
+  bool? enabled,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,16 +290,23 @@ Widget titleWithTextField({
       SizedBox(
         height: Get.height * 0.065,
         child: TextField(
+          textAlignVertical: TextAlignVertical.center,
+          style: appTextStyle(fontSize: 11, fontWeight: FontWeight.w400),
           decoration: InputDecoration(
+            enabled: enabled ?? true,
             filled: true,
             fillColor: ColorRes.backgroundColor,
-            contentPadding: const EdgeInsets.only(left: 15, right: 0),
+            contentPadding: const EdgeInsets.only(
+              left: 15,
+              right: 0,
+            ),
             // constraints:
             //     BoxConstraints.tight(Size(Get.width, Get.height * 0.065)),
             border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(5)),
             hintMaxLines: 2,
+
             suffixIcon: (suffixImg == null)
                 ? const SizedBox()
                 : Transform.scale(

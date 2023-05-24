@@ -1,12 +1,20 @@
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:restaurant_athen_app/api_calling/add_signature_api.dart';
+import 'package:restaurant_athen_app/api_calling/edit_signature_api.dart';
+import 'package:restaurant_athen_app/api_calling/single_obj_api.dart';
 import 'package:restaurant_athen_app/common/appbar.dart';
 import 'package:restaurant_athen_app/common/button.dart';
+import 'package:restaurant_athen_app/models/add_signature_model.dart';
+import 'package:restaurant_athen_app/models/edit_signature_model.dart';
 import 'package:restaurant_athen_app/screens/restaurant_athen_screen/restaurant_athen.dart';
 import 'package:restaurant_athen_app/screens/restaurant_athen_screen/restaurant_controller.dart';
 import 'package:restaurant_athen_app/screens/signature_screen/signature_controller.dart';
+import 'package:restaurant_athen_app/services/pref_services.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
 import 'package:restaurant_athen_app/utils/color_res.dart';
@@ -21,9 +29,15 @@ class SignatureScreen extends StatelessWidget {
   final RestaurantAthenController restaurantAthenController =
       Get.put(RestaurantAthenController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  AddSignatureModel addSignatureModel = AddSignatureModel();
+  EditSignatureModel editSignatureModel = EditSignatureModel();
   @override
   Widget build(BuildContext context) {
+    dynamic args = ModalRoute.of(context)!.settings.arguments;
+
+    String clientName = args[0];
+    String btnTyp = args[1];
+
     return Scaffold(
       key: _key,
       drawer: drawer(),
@@ -75,7 +89,7 @@ class SignatureScreen extends StatelessWidget {
                         height: Get.height * 0.008,
                       ),
                       Text(
-                        "Restaurant Athen",
+                        "$clientName",
                         style: appTextStyle(
                           fontSize: 16,
                         ),
@@ -102,14 +116,14 @@ class SignatureScreen extends StatelessWidget {
               height: Get.height * 0.04,
             ),
             Text(
-              "Create Signature".tr,
+              "createSignLabel".tr,
               style: appTextStyle(fontSize: 30),
             ),
             SizedBox(
               height: Get.height * 0.008,
             ),
             Text(
-              "Please do your signature".tr,
+              "createSignText".tr,
               style: appTextStyle(
                   fontSize: 14,
                   color: ColorRes.greyClr,
@@ -138,18 +152,60 @@ class SignatureScreen extends StatelessWidget {
               height: Get.height * 0.04,
             ),
             button(
-                txt: "Save",
+                txt: (btnTyp == "add") ? "saveSignBtn".tr : "editBtn".tr,
                 onTap: () async {
                   final data = await signatureGlobalKey.currentState!
                       .toImage(pixelRatio: 3.0);
+
                   final bytes =
                       await data.toByteData(format: ui.ImageByteFormat.png);
+
+                  var tempDir = await getTemporaryDirectory();
                   signature = Image.memory(bytes!.buffer.asUint8List());
 
-                  Get.off(() => RestaurantAthenScreen(
-                        signature: signature,
-                        reverse: true,
-                      ));
+                  File file = await File('${tempDir.path}/img.jpg')
+                      .writeAsBytes(bytes.buffer.asUint8List());
+
+                  (btnTyp == "add")
+                      ? addSignatureModel =
+                          await AddSignatureApi.addSignatureApi(
+                              signature: file.path, objectId: "7"
+                              // PrefService.getInt("objectId").toString()
+                              )
+                      : editSignatureModel =
+                          await EditSignatureApi.editSignatureApi(
+                              signature: file.path);
+
+                  restaurantAthenController.singleObjModel.value =
+                      await SingleObjApi.singleObjApi();
+
+                  restaurantAthenController.updatedImgList = List.generate(
+                      restaurantAthenController
+                          .singleObjModel.value.data!.problems!.length,
+                      (index) => "");
+
+                  restaurantAthenController.textEditingController =
+                      List.generate(
+                          restaurantAthenController
+                              .singleObjModel.value.data!.problems!.length,
+                          (index) => TextEditingController());
+
+                  PrefService.setValue(
+                      "signatureId",
+                      restaurantAthenController
+                          .singleObjModel.value.data!.signature![0].id);
+                  Get.off(
+                      () => RestaurantAthenScreen(
+                            signature: file.path,
+                            reverse: true,
+                          ),
+                      arguments: [
+                        clientName,
+                        args[2],
+                        [],
+                        <TextEditingController>[],
+                        restaurantAthenController.singleObjModel.value,
+                      ]);
                 }),
             SizedBox(
               height: Get.height * 0.04,

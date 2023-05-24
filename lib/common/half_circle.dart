@@ -12,11 +12,11 @@ Widget halfCircle() {
       ),
       Container(
         alignment: Alignment.topRight,
-        height: Get.height * 0.68,
+        // height: Get.height * 0.68,
         width: Get.width * 0.68,
         child: Image.asset(
           AssetRes.halfCircleImg,
-          fit: BoxFit.fill,
+          fit: BoxFit.fitWidth,
         ),
       ),
     ],

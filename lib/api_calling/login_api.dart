@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_athen_app/models/login_model.dart';
@@ -25,37 +27,20 @@ class LoginApi {
       }, url: url, body: param);
       if (response != null && response.statusCode == 200) {
         print("login.....");
-        //   bool? status = jsonDecode(response.body)["status"];
-        //   if (status == false) {
-        //     // errorToast(jsonDecode(response.body)["message"]);
-        //   } else if (status == true) {
-        //     // flutterToast(jsonDecode(response.body)["message"]);
-        // await PrefService.setValue(
-        //     PrefKeys.token,
-        //     jsonDecode(response.body)["data"]["token"]["original"]
-        //         ["access_token"]);
-        //     /// login complete...
-        //     // await PrefService.setValue(
-        //     //     PrefKeys.token, jsonDecode(response.body)["token"]);
-        //     // await PrefService.setValue(
-        //     //     PrefKeys.loginId, jsonDecode(response.body)["data"]["id"]);
+        await PrefService.setValue(
+            PrefKeys.token, jsonDecode(response.body)["data"]["token"]);
         await PrefService.setValue(PrefKeys.login, true);
-        //     // Get.toNamed(AppRes.dashBoardScreen);
         Get.offNamedUntil(AppRes.homePage, (route) => false);
         print(response.body);
 
         return loginModelFromJson(response.body);
-        //   }
-        // } else if (response != null && response.statusCode == 500) {
-        //   // errorToast(jsonDecode(response.body)["message"]);
-        // }
       } else {
         print(response?.statusCode);
         print(response?.body);
         print("LOGIN FAILED..... ");
       }
     } catch (e) {
-      return [];
+      print(e);
     }
   }
 }

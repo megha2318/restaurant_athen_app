@@ -53,6 +53,17 @@ dependencies:
   syncfusion_flutter_signaturepad: ^19.4.56
   dotted_border: ^2.0.0+3
   month_picker_dialog:
+  dropdown_plus: ^0.0.8
+  cached_network_image:
+  native_pdf_renderer: ^5.0.0+1
+  syncfusion_flutter_pdfviewer:
+  easy_pdf_viewer:
+    path: easy_pdf_viewer-1.0.6
+  path_provider:
+  pdfdownload:
+  dio:
+  permission_handler:
+#  path_provider:
 
 dev_dependencies:
   flutter_test:

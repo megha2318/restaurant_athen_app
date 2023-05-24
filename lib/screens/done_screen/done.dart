@@ -7,7 +7,10 @@ import 'package:restaurant_athen_app/utils/color_res.dart';
 import 'package:restaurant_athen_app/utils/strings.dart';
 
 class DoneScreen extends StatelessWidget {
-  DoneScreen({Key? key, this.flow}) : super(key: key);
+  DoneScreen({
+    Key? key,
+    this.flow,
+  }) : super(key: key);
 
   String? flow;
 
@@ -44,7 +47,9 @@ class DoneScreen extends StatelessWidget {
                           ? Get.offNamedUntil(
                               AppRes.loginPage, (route) => false)
                           : Get.offNamedUntil(
-                              AppRes.homePage, (route) => false);
+                              AppRes.homePage,
+                              (route) => false,
+                            );
                     },
                     child: SizedBox(
                       height: 250,

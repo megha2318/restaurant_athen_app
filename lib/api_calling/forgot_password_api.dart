@@ -24,7 +24,9 @@ class ForgotPasswordApi {
       }, url: url, body: param);
       if (response != null && response.statusCode == 200) {
         print(response.body);
-        Get.toNamed(AppRes.verificationPage);
+        Get.toNamed(AppRes.verificationPage,
+            arguments:
+                jsonDecode(response.body)['employee']['email'].toString());
 
         PrefService.setValue(
             "email", jsonDecode(response.body)['employee']['email'].toString());

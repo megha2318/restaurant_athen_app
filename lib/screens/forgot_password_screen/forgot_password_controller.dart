@@ -7,7 +7,7 @@ class ForgotPasswordController extends GetxController {
   Rx<TextEditingController> emailIdCon = TextEditingController().obs;
 
   String errorEmail = "";
-
+  RxBool loader = false.obs;
   validator() {
     emailValidation();
     if (errorEmail == "") {
@@ -26,7 +26,9 @@ class ForgotPasswordController extends GetxController {
 
   sendOnTap() async {
     if (validator()) {
+      loader.value = true;
       await ForgotPasswordApi.forgotPasswordApi(email: emailIdCon.value.text);
+      loader.value = false;
     } else {
       if (errorEmail != "") {
         errorToast(errorEmail);

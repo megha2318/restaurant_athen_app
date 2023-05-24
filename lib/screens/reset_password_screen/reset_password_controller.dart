@@ -11,6 +11,7 @@ class ResetPasswordController extends GetxController {
 
   RxBool isObscure = false.obs;
   RxBool isObscureReEnter = false.obs;
+  RxBool loader = false.obs;
   onTapEyeNwPassword() {
     if (isObscure.value == false) {
       isObscure.value = true;
@@ -69,10 +70,12 @@ class ResetPasswordController extends GetxController {
 
   confirmOnTap() async {
     if (validator()) {
+      loader.value = true;
       await ResetPasswordApi.resetPasswordApi(
           email: PrefService.getString("email"),
           password: newPasswordCon.value.text,
           confirmPassword: reEnterPasswordCon.value.text);
+      loader.value = false;
     } else {
       if (errorPassword != "") {
         errorToast(errorPassword);

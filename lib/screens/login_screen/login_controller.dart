@@ -71,13 +71,17 @@ class LoginController extends GetxController {
     }
   }
 
+  RxBool loader = false.obs;
   LoginModel loginModel = LoginModel();
   loginOnTap() async {
     if (validator()) {
+      loader.value = true;
       await LoginApi.loginApi(
         username: userIdCon.value.text,
         password: userPasswordCon.value.text,
       );
+      flutterToast('Logged in successfully.');
+      loader.value = false;
     } else {
       if (errorId != "") {
         errorToast(errorId);

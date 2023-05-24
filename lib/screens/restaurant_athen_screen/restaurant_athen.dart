@@ -1,9 +1,22 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_athen_app/api_calling/delete_problem_api.dart';
+import 'package:restaurant_athen_app/api_calling/delete_signature_api.dart';
+import 'package:restaurant_athen_app/api_calling/edit_problem_api.dart';
+import 'package:restaurant_athen_app/api_calling/single_obj_api.dart';
 import 'package:restaurant_athen_app/common/appbar.dart';
 import 'package:restaurant_athen_app/common/button.dart';
+import 'package:restaurant_athen_app/common/loaders.dart';
+import 'package:restaurant_athen_app/common/popup.dart';
 import 'package:restaurant_athen_app/common/text_field.dart';
 import 'package:restaurant_athen_app/common/title_with_rounded_check.dart';
+import 'package:restaurant_athen_app/screens/home_screen/home_controller.dart';
+import 'package:restaurant_athen_app/screens/pdf_screen/show_pdf.dart';
 import 'package:restaurant_athen_app/screens/restaurant_athen_screen/restaurant_controller.dart';
 import 'package:restaurant_athen_app/utils/app_textstyle.dart';
 import 'package:restaurant_athen_app/utils/asset_res.dart';
@@ -14,7 +27,7 @@ class RestaurantAthenScreen extends StatefulWidget {
   RestaurantAthenScreen({Key? key, this.signature, this.reverse})
       : super(key: key);
 
-  Image? signature;
+  String? signature;
   bool? reverse;
 
   @override
@@ -25,9 +38,31 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
   final RestaurantAthenController restaurantAthenController =
       Get.put(RestaurantAthenController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  HomeController homeController = Get.put(HomeController());
+  List input = [];
 
   @override
   Widget build(BuildContext context) {
+    dynamic val = ModalRoute.of(context)!.settings.arguments;
+    dynamic args = (val == null) ? [] : val[1];
+    String clientName = (val == null) ? "" : val[0];
+
+    if (widget.reverse == true) {
+      setState(() {});
+    }
+
+    if (restaurantAthenController.singleObjModel.value.data != null) {
+      if (restaurantAthenController.singleObjModel.value.data?.signature !=
+          []) {
+        // PrefService.setValue(
+        //     "signatureId",
+        //     restaurantAthenController
+        //         .singleObjModel.value.data?.signature?[0].id);
+      }
+
+      //     .signature = widget.signature;
+      // restaurantAthenController.
+    }
     return Scaffold(
       key: _key,
       drawer: drawer(),
@@ -78,7 +113,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                         height: Get.height * 0.008,
                       ),
                       Text(
-                        "Restaurant Athen",
+                        clientName,
                         style: appTextStyle(
                           fontSize: 16,
                         ),
@@ -137,8 +172,9 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                             height: Get.height * 0.02,
                           ),
                           titleWithTextField(
+                              enabled: false,
                               title: Strings.workAddress,
-                              hintTxt: Strings.enterWorkAddress,
+                              hintTxt: args.address,
                               suffixImg: AssetRes.locationIcon),
                           SizedBox(
                             height: Get.height * 0.02,
@@ -148,8 +184,9 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                               Expanded(
                                 flex: 1,
                                 child: titleWithTextField(
+                                    enabled: false,
                                     title: Strings.hours,
-                                    hintTxt: Strings.enterHours,
+                                    hintTxt: args.hours,
                                     suffixImg: AssetRes.clockIcon),
                               ),
                               SizedBox(
@@ -158,8 +195,9 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                               Expanded(
                                 flex: 1,
                                 child: titleWithTextField(
+                                    enabled: false,
                                     title: Strings.minutes,
-                                    hintTxt: Strings.enterMinutes,
+                                    hintTxt: args.minutes,
                                     suffixImg: AssetRes.clockIcon),
                               ),
                             ],
@@ -173,7 +211,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                 flex: 1,
                                 child: titleWithTextFieldWithoutSuffix(
                                   title: Strings.contactPerson,
-                                  hintTxt: Strings.enterContactPerson,
+                                  hintTxt: args.contactPersonName,
                                 ),
                               ),
                               SizedBox(
@@ -183,7 +221,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                 flex: 1,
                                 child: titleWithTextFieldWithoutSuffix(
                                   title: Strings.contactNumber,
-                                  hintTxt: Strings.enterContactNumber,
+                                  hintTxt: args.contactPersonPhoneNumber,
                                 ),
                               ),
                             ],
@@ -209,7 +247,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Timerecording".tr,
+                            "timeRecording".tr,
                             style: appTextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
@@ -230,7 +268,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        "08:00",
+                                        "${args.startTime}",
                                         style: appTextStyle(
                                             fontSize: 20,
                                             color: ColorRes.color74BDCB),
@@ -265,7 +303,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        "13:00",
+                                        "${args.endTime.toString().split('-')[0]}:${args.endTime.toString().split('-')[1]}",
                                         style: appTextStyle(
                                             fontSize: 20,
                                             color: ColorRes.color74BDCB),
@@ -292,245 +330,676 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.05,
-                          right: Get.width * 0.05,
-                          top: Get.height * 0.02,
-                          bottom: Get.height * 0.02),
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: ColorRes.white),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "My Task for Today".tr,
-                            style: appTextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.cleanTheWindows,
-                              val: restaurantAthenController.val.value,
-                              onTap: () {
-                                restaurantAthenController.onTapCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.cleanTheFloor,
-                              val:
-                                  restaurantAthenController.cleanFloorVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapFloorCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.dryCleanSheets,
-                              val: restaurantAthenController.dryCleanVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapDryCleanCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.cleanDesk,
-                              val: restaurantAthenController.cleanDeskVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapCleanDeskCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.paperWork,
-                              val: restaurantAthenController.paperWorkVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapPaperWorkCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.lunchBreak,
-                              val:
-                                  restaurantAthenController.lunchBreakVal.value,
-                              onTap: () {
-                                restaurantAthenController
-                                    .onTapLunchBreakCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.cleaningEntrance,
-                              val: restaurantAthenController.cleaningVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapCleaningCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.wateringAllPlants,
-                              val: restaurantAthenController.plantVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapPlantsCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.cleanAllWindows,
-                              val: restaurantAthenController.windowVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapWindowCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.arrangeAllFiles,
-                              val: restaurantAthenController.filesVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapFilesCheck();
-                              })),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Obx(() => titleWithRoundedCheck(
-                              title: Strings.lightsOffAllRooms,
-                              val: restaurantAthenController.roomsVal.value,
-                              onTap: () {
-                                restaurantAthenController.onTapRoomsCheck();
-                              })),
-                        ],
-                      ),
+                    Obx(
+                      () => (restaurantAthenController
+                                  .singleObjModel.value.data !=
+                              null)
+                          ? Container(
+                              padding: EdgeInsets.only(
+                                  left: Get.width * 0.05,
+                                  right: Get.width * 0.05,
+                                  top: Get.height * 0.02,
+                                  bottom: Get.height * 0.02),
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: ColorRes.white),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "myTodayTask".tr,
+                                    style: appTextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: Get.height * 0.02,
+                                  ),
+                                  Column(
+                                    children: [
+                                      ...List.generate(
+                                          (restaurantAthenController
+                                                      .singleObjModel
+                                                      .value
+                                                      .data !=
+                                                  null)
+                                              ? restaurantAthenController
+                                                      .singleObjModel
+                                                      .value
+                                                      .data
+                                                      ?.tasks
+                                                      ?.length ??
+                                                  0
+                                              : 0, (index) {
+                                        List stsdrpdwn = List.generate(
+                                            restaurantAthenController
+                                                    .singleObjModel
+                                                    .value
+                                                    .data
+                                                    ?.tasks
+                                                    ?.length ??
+                                                0,
+                                            (index) => restaurantAthenController
+                                                        .singleObjModel
+                                                        .value
+                                                        .data
+                                                        ?.tasks?[index]
+                                                        .status ==
+                                                    "0"
+                                                ? "Pending"
+                                                : restaurantAthenController
+                                                            .singleObjModel
+                                                            .value
+                                                            .data
+                                                            ?.tasks?[index]
+                                                            .status ==
+                                                        "1"
+                                                    ? "InProgress"
+                                                    : "Complete");
+                                        return titleWithRoundedCheck(
+                                            id: restaurantAthenController
+                                                .singleObjModel
+                                                .value
+                                                .data
+                                                ?.tasks?[index]
+                                                .id,
+                                            empName: restaurantAthenController
+                                                .singleObjModel
+                                                .value
+                                                .data
+                                                ?.tasks?[index]
+                                                .employee?[0]
+                                                .firstName
+                                                .toString(),
+                                            dropdownVal: stsdrpdwn[index],
+                                            items: (stsdrpdwn[index] ==
+                                                    "InProgress")
+                                                ? ['Complete']
+                                                : ['InProgress', "Complete"],
+                                            title:
+                                                "${restaurantAthenController.singleObjModel.value.data?.tasks?[index].name}"
+                                            // "${homeController.taskListModel.value.data?[index].name}"
+                                            );
+                                      })
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
                     ),
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.05,
-                          right: Get.width * 0.05,
-                          bottom: Get.height * 0.02,
-                          top: Get.height * 0.02),
-                      width: Get.width,
-                      // height: Get.height * 0.55,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: ColorRes.white),
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                Strings.mainTaskList.tr,
-                                style: appTextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w600),
+                    Obx(
+                      () => (restaurantAthenController
+                                  .singleObjModel.value.data ==
+                              null)
+                          ? const SizedBox()
+                          : Container(
+                              padding: EdgeInsets.only(
+                                  left: Get.width * 0.05,
+                                  right: Get.width * 0.05,
+                                  bottom: Get.height * 0.02,
+                                  top: Get.height * 0.02),
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: ColorRes.white),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        Strings.mainTaskList.tr,
+                                        style: appTextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Get.height * 0.02,
+                                  ),
+                                  ...List.generate(
+                                      restaurantAthenController.singleObjModel
+                                          .value.data!.pdfs!.length, (index) {
+                                    restaurantAthenController.pdfTOImg(
+                                        restaurantAthenController.singleObjModel
+                                            .value.data!.pdfs![index].pdf);
+                                    return (index < 2)
+                                        ? Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    top: Get.height * 0.03),
+                                                alignment: Alignment.center,
+                                                height: Get.height * 0.36,
+                                                decoration: BoxDecoration(
+                                                    color: ColorRes
+                                                        .backgroundColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: GetBuilder<
+                                                    RestaurantAthenController>(
+                                                  id: 'pdf',
+                                                  builder: (restaurantAthenController) =>
+                                                      (restaurantAthenController
+                                                                  .pageImage ==
+                                                              null)
+                                                          ? const SizedBox()
+                                                          : Stack(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              children: [
+                                                                Container(
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.36,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.5,
+                                                                  child:
+                                                                      PDFViewer(
+                                                                    document: restaurantAthenController
+                                                                            .document?[index] ??
+                                                                        PDFDocument(),
+                                                                    progressIndicator:
+                                                                        const SmallLoader(),
+                                                                    lazyLoad:
+                                                                        false,
+                                                                    isOnePage:
+                                                                        true,
+                                                                    showIndicator:
+                                                                        false,
+                                                                    zoomSteps:
+                                                                        0,
+                                                                    showNavigation:
+                                                                        false,
+                                                                    showPicker:
+                                                                        false,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    enableSwipeNavigation:
+                                                                        false,
+                                                                    controller:
+                                                                        PageController(
+                                                                      initialPage:
+                                                                          1,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.36,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.5,
+                                                                  color: ColorRes
+                                                                      .color74BDCB
+                                                                      .withOpacity(
+                                                                          0.01),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.02,
+                                              ),
+                                              Row(
+                                                // mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                      flex: 5,
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          bool isSave = await restaurantAthenController.pdfDownload(
+                                                              restaurantAthenController
+                                                                  .singleObjModel
+                                                                  .value
+                                                                  .data!
+                                                                  .pdfs![index]
+                                                                  .pdf
+                                                                  .toString(),
+                                                              'mainTask${restaurantAthenController.singleObjModel.value.data!.pdfs![index].id}.pdf');
+                                                          if (isSave) {
+                                                            flutterToast(
+                                                                'PDF download Successfully');
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: Get.height *
+                                                              0.065,
+                                                          width: Get.width,
+                                                          // margin: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
+                                                          decoration: BoxDecoration(
+                                                              color: ColorRes
+                                                                  .color74BDCB,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          99)),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                  height: 14,
+                                                                  width: 14,
+                                                                  child: Image
+                                                                      .asset(
+                                                                    AssetRes
+                                                                        .downloadIcon,
+                                                                    fit: BoxFit
+                                                                        .fitHeight,
+                                                                  )),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.008,
+                                                              ),
+                                                              Text(
+                                                                Strings.download
+                                                                    .tr,
+                                                                style:
+                                                                    appTextStyle(
+                                                                  fontSize: 14,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                                  SizedBox(
+                                                    width: Get.width * 0.05,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: FloatingActionButton(
+                                                      heroTag: "eye",
+                                                      elevation: 0,
+                                                      backgroundColor: ColorRes
+                                                          .backgroundColor,
+                                                      onPressed: () {
+                                                        Get.to(() => ShowPDF(
+                                                              pdfDocument:
+                                                                  restaurantAthenController
+                                                                          .document?[
+                                                                      index],
+                                                            ));
+                                                      },
+                                                      child: const Icon(
+                                                        Icons
+                                                            .visibility_rounded,
+                                                        color: ColorRes
+                                                            .color74BDCB,
+                                                        size: 20,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        : SizedBox();
+                                  })
+                                ],
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Container(
-                            height: Get.height * 0.36,
-                            decoration: BoxDecoration(
-                                color: ColorRes.backgroundColor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Image.asset(
-                              AssetRes.pdfImg,
-                              fit: BoxFit.cover,
                             ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  flex: 5,
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      height: Get.height * 0.065,
-                                      width: Get.width,
-                                      // margin: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
-                                      decoration: BoxDecoration(
-                                          color: ColorRes.color74BDCB,
-                                          borderRadius:
-                                              BorderRadius.circular(99)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                              height: 14,
-                                              width: 14,
-                                              child: Image.asset(
-                                                AssetRes.downloadIcon,
-                                                fit: BoxFit.fitHeight,
-                                              )),
-                                          SizedBox(
-                                            width: Get.width * 0.008,
-                                          ),
-                                          Text(
-                                            Strings.download.tr,
-                                            style: appTextStyle(
-                                              fontSize: 14,
+                    ),
+                    // SizedBox(
+                    //   height: Get.height * 0.04,
+                    // ),
+                    // restaurantAthenController.getInput(),
+
+                    Obx(
+                      () => (restaurantAthenController
+                                  .singleObjModel.value.data !=
+                              null)
+                          ? Column(
+                              children: [
+                                ...List.generate(
+                                    restaurantAthenController.singleObjModel
+                                        .value.data!.problems!.length, (index) {
+                                  restaurantAthenController
+                                          .textEditingController[index].text =
+                                      restaurantAthenController.singleObjModel
+                                          .value.data!.problems![index].reason
+                                          .toString();
+                                  return Container(
+                                    margin:
+                                        EdgeInsets.only(top: Get.height * 0.04),
+                                    padding: EdgeInsets.only(
+                                        left: Get.width * 0.05,
+                                        right: Get.width * 0.05,
+                                        bottom: Get.height * 0.02,
+                                        top: Get.height * 0.02),
+                                    width: Get.width,
+                                    // height: Get.height * 0.48,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: ColorRes.white),
+                                    child: Column(
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              elevation: 10,
+                                              barrierColor: ColorRes.black
+                                                  .withOpacity(0.4),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  ColorRes.color74BDCB,
+                                              context: context,
+                                              builder: (context) {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        final path =
+                                                            await restaurantAthenController
+                                                                .gallaryPickImage();
+                                                        if (path != null) {
+                                                          restaurantAthenController
+                                                                  .updatedImgList[
+                                                              index] = path;
+                                                          restaurantAthenController
+                                                              .update([
+                                                            'imgUpdateAPI'
+                                                          ]);
+                                                          // img = io.File(path);
+                                                          // addImg(img: path);
+                                                          // restaurantAthenController.imageUrl[index] =
+                                                          //     img;
+                                                          // print(path);
+                                                        }
+                                                        Get.back();
+                                                      },
+                                                      child: ListTile(
+                                                        leading: const Icon(
+                                                            Icons.camera,
+                                                            color:
+                                                                ColorRes.white),
+                                                        title: Text(
+                                                          "Camera".tr,
+                                                          style: appTextStyle(
+                                                              fontSize: 16,
+                                                              color: ColorRes
+                                                                  .white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 0.3,
+                                                      width: Get.width,
+                                                      color: ColorRes.white,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        final path =
+                                                            await restaurantAthenController
+                                                                .gallaryPickImage();
+                                                        if (path != null) {
+                                                          restaurantAthenController
+                                                                  .updatedImgList[
+                                                              index] = path;
+                                                          restaurantAthenController
+                                                              .update([
+                                                            'imgUpdateAPI'
+                                                          ]);
+                                                          print(
+                                                              "========================================================================");
+                                                          print(restaurantAthenController
+                                                                  .updatedImgList[
+                                                              index]);
+                                                          print(
+                                                              "========================================================================");
+                                                        }
+                                                        Get.back();
+                                                      },
+                                                      child: ListTile(
+                                                        leading: const Icon(
+                                                          Icons
+                                                              .photo_size_select_actual_outlined,
+                                                          color: ColorRes.white,
+                                                        ),
+                                                        title: Text(
+                                                          "Gallery".tr,
+                                                          style: appTextStyle(
+                                                              fontSize: 16,
+                                                              color: ColorRes
+                                                                  .white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: DottedBorder(
+                                            borderType: BorderType.RRect,
+                                            radius: Radius.circular(10),
+                                            padding: EdgeInsets.all(0),
+                                            dashPattern: [6, 3, 6, 3],
+                                            color: Colors.grey,
+                                            strokeWidth: 2,
+                                            strokeCap: StrokeCap.round,
+                                            child: Container(
+                                              height: Get.height * 0.25,
+                                              width: Get.width,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      ColorRes.backgroundColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: GetBuilder<
+                                                    RestaurantAthenController>(
+                                                  id: 'imgUpdateAPI',
+                                                  builder: (restaurantAthenController) =>
+                                                      (restaurantAthenController
+                                                                      .updatedImgList[
+                                                                  index] !=
+                                                              "")
+                                                          ? Image.file(
+                                                              File(restaurantAthenController
+                                                                      .updatedImgList[
+                                                                  index]),
+                                                              fit: BoxFit.cover,
+                                                            )
+                                                          : CachedNetworkImage(
+                                                              fit: BoxFit.cover,
+                                                              imageUrl: restaurantAthenController
+                                                                  .singleObjModel
+                                                                  .value
+                                                                  .data!
+                                                                  .problems![
+                                                                      index]
+                                                                  .image
+                                                                  .toString(),
+                                                              placeholder: (context,
+                                                                      url) =>
+                                                                  SmallLoader(),
+                                                              errorWidget: (context,
+                                                                      url,
+                                                                      error) =>
+                                                                  Image.asset(
+                                                                      AssetRes
+                                                                          .logoImg),
+                                                            ),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        Container(
+                                            alignment: Alignment.centerLeft,
+                                            padding: EdgeInsets.only(
+                                                left: Get.width * 0.05),
+                                            width: Get.width,
+                                            height: Get.height * 0.065,
+                                            decoration: BoxDecoration(
+                                                color: ColorRes.backgroundColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: TextField(
+                                              controller:
+                                                  restaurantAthenController
+                                                          .textEditingController[
+                                                      index],
+                                              textAlignVertical:
+                                                  TextAlignVertical.center,
+                                              // expands: true,
+                                              // maxLines: 1,
+                                              // minLines: 1,
+
+                                              style: appTextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400),
+                                              minLines: 1,
+                                              decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor:
+                                                      ColorRes.backgroundColor,
+                                                  contentPadding:
+                                                      const EdgeInsets.all(0),
+                                                  // constraints:
+                                                  //     BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  hintMaxLines: 2,
+                                                  hintText:
+                                                      "Enter your problem reason here"
+                                                          .toString()
+                                                          .tr,
+                                                  hintStyle: appTextStyle(
+                                                      fontSize: 12,
+                                                      color: ColorRes.greyClr,
+                                                      fontWeight:
+                                                          FontWeight.w400)),
+                                            )),
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 5,
+                                                child: button(
+                                                    fontSize: 14,
+                                                    txt:
+                                                        "editProblemPicture".tr,
+                                                    onTap: () async {
+                                                      restaurantAthenController.editProblemModel = await EditProblemApi.editProblemApi(
+                                                          reason: restaurantAthenController
+                                                              .textEditingController[
+                                                                  index]
+                                                              .value
+                                                              .text
+                                                              .toString(),
+                                                          image: (restaurantAthenController
+                                                                      .updatedImgList[
+                                                                          index]
+                                                                      .toString() ==
+                                                                  "")
+                                                              ? restaurantAthenController
+                                                                  .singleObjModel
+                                                                  .value
+                                                                  .data!
+                                                                  .problems![
+                                                                      index]
+                                                                  .image
+                                                                  .toString()
+                                                              : restaurantAthenController
+                                                                  .updatedImgList[
+                                                                      index]
+                                                                  .toString());
+                                                      setState(() {});
+                                                    })),
+                                            SizedBox(
+                                              width: Get.width * 0.05,
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: FloatingActionButton(
+                                                heroTag: "1st",
+                                                elevation: 0,
+                                                backgroundColor:
+                                                    ColorRes.backgroundColor,
+                                                onPressed: () async {
+                                                  await DeleteProblemApi
+                                                      .deleteProblemApi(
+                                                    id: restaurantAthenController
+                                                        .singleObjModel
+                                                        .value
+                                                        .data
+                                                        ?.problems?[index]
+                                                        .id,
+                                                  );
+
+                                                  restaurantAthenController
+                                                          .singleObjModel
+                                                          .value =
+                                                      await SingleObjApi
+                                                          .singleObjApi();
+                                                  setState(() {});
+                                                },
+                                                child: Transform.scale(
+                                                  scale: 0.5,
+                                                  child: Image.asset(
+                                                      AssetRes.deleteIcon),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  )),
-                              SizedBox(
-                                width: Get.width * 0.05,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: FloatingActionButton(
-                                  heroTag: "eye",
-                                  elevation: 0,
-                                  backgroundColor: ColorRes.backgroundColor,
-                                  onPressed: () {},
-                                  child: const Icon(
-                                    Icons.visibility_rounded,
-                                    color: ColorRes.color74BDCB,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  );
+                                })
+                              ],
+                            )
+                          : SizedBox(),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.04,
-                    ),
-                    restaurantAthenController.getInput(),
-                    // GetBuilder<RestaurantAthenController>(
-                    //     id: "problem",
-                    //     builder: (restaurantAthenController) => Column(
-                    //           children: [
-                    //             ...restaurantAthenController.input
-                    //                 .map((e) => e),
-                    //           ],
-                    //         )),
+
+                    GetBuilder<RestaurantAthenController>(
+                        id: "problem",
+                        builder: (restaurantAthenController) => Column(
+                              children: [
+                                ...restaurantAthenController.input
+                                    .map((e) => e),
+                              ],
+                            )),
+
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
@@ -583,60 +1052,114 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                           SizedBox(
                             height: Get.height * 0.02,
                           ),
-                          (widget.signature != null)
-                              ? Container(
-                                  width: Get.width,
-                                  height: Get.height * 0.45,
-                                  decoration: BoxDecoration(
-                                      color: ColorRes.backgroundColor,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: widget.signature,
-                                )
-                              : SizedBox(),
-                          (widget.signature != null)
-                              ? SizedBox(
-                                  height: Get.height * 0.02,
-                                )
-                              : SizedBox(),
-                          (widget.signature != null)
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                        flex: 5,
-                                        child: button(
-                                            fontSize: 14,
-                                            txt: "Edit",
-                                            onTap: () {})),
-                                    SizedBox(
-                                      width: Get.width * 0.05,
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FloatingActionButton(
-                                        heroTag: "delete",
-                                        elevation: 0,
-                                        backgroundColor:
-                                            ColorRes.backgroundColor,
-                                        onPressed: () {
-                                          widget.signature = null;
-                                          setState(() {});
-                                        },
-                                        child: Transform.scale(
-                                          scale: 0.5,
-                                          child:
-                                              Image.asset(AssetRes.deleteIcon),
+                          Obx(
+                            () => (restaurantAthenController
+                                            .singleObjModel.value.data !=
+                                        null &&
+                                    (restaurantAthenController.singleObjModel
+                                        .value.data!.signature!.isNotEmpty))
+                                ? Container(
+                                    width: Get.width,
+                                    height: Get.height * 0.45,
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.backgroundColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: (widget.signature != null)
+                                        ? Image.file(File(widget.signature!))
+                                        : Image.file(File(
+                                            restaurantAthenController
+                                                .singleObjModel
+                                                .value
+                                                .data!
+                                                .signature![0]
+                                                .signature
+                                                .toString())),
+
+                                    // CachedNetworkImage(
+                                    //   imageUrl: restaurantAthenController
+                                    //       .singleObjModel
+                                    //       .value
+                                    //       .data!
+                                    //       .signature![0]
+                                    //       .signature
+                                    //       .toString(),
+                                    //   placeholder: (context, url) =>
+                                    //       SmallLoader(),
+                                    //   // errorWidget: (context, url, error) =>
+                                    //   //     Image.asset(AssetRes.logoImg),
+                                    // ),
+                                    // widget.signature,
+                                  )
+                                : SizedBox(),
+                          ),
+                          Obx(
+                            () => (restaurantAthenController
+                                            .singleObjModel.value.data !=
+                                        null &&
+                                    restaurantAthenController.singleObjModel
+                                        .value.data!.signature!.isNotEmpty)
+                                ? SizedBox(
+                                    height: Get.height * 0.02,
+                                  )
+                                : SizedBox(),
+                          ),
+                          Obx(
+                            () => (restaurantAthenController
+                                            .singleObjModel.value.data !=
+                                        null &&
+                                    restaurantAthenController.singleObjModel
+                                        .value.data!.signature!.isNotEmpty)
+                                ? Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 5,
+                                          child: button(
+                                              fontSize: 14,
+                                              txt: "Edit",
+                                              onTap: () {
+                                                restaurantAthenController
+                                                    .editSignatureOnTap(
+                                                        args: args,
+                                                        clientName: clientName);
+                                              })),
+                                      SizedBox(
+                                        width: Get.width * 0.05,
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: FloatingActionButton(
+                                          heroTag: "delete",
+                                          elevation: 0,
+                                          backgroundColor:
+                                              ColorRes.backgroundColor,
+                                          onPressed: () async {
+                                            await DeleteSignatureApi
+                                                .deleteSignatureApi();
+                                            widget.signature = null;
+                                            await restaurantAthenController
+                                                .singleObjApiCall();
+                                            setState(() {});
+                                          },
+                                          child: Transform.scale(
+                                            scale: 0.5,
+                                            child: Image.asset(
+                                                AssetRes.deleteIcon),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              : button(
-                                  fontSize: 14,
-                                  txt: "Add Signature",
-                                  onTap: () {
-                                    restaurantAthenController
-                                        .requestForSignatureOnTap();
-                                  }),
+                                    ],
+                                  )
+                                : button(
+                                    fontSize: 14,
+                                    txt: "Add Signature",
+                                    onTap: () {
+                                      restaurantAthenController
+                                          .requestForSignatureOnTap(
+                                              args: args,
+                                              clientName: clientName);
+                                    }),
+                          ),
                         ],
                       ),
                     ),
@@ -651,7 +1174,15 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                               fontSize: 14,
                               txt: "Add Problem",
                               onTap: () {
-                                restaurantAthenController.addProblemOnTap();
+                                restaurantAthenController.textEditingController
+                                    .add(TextEditingController());
+                                restaurantAthenController.input.add(
+                                    restaurantAthenController.getInput(
+                                        input.length,
+                                        context,
+                                        restaurantAthenController
+                                            .textEditingController));
+                                restaurantAthenController.update(['problem']);
                               }),
                         ),
                         SizedBox(
@@ -662,7 +1193,7 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                           child: button(
                               fontSize: 14,
                               color: ColorRes.white,
-                              txt: "Submit",
+                              txt: "submitBtn".tr,
                               onTap: () {
                                 restaurantAthenController.submitOnTap();
                               }),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+import 'package:restaurant_athen_app/api_calling/translation_api.dart';
 import 'package:restaurant_athen_app/local_string/local_string.dart';
 import 'package:restaurant_athen_app/screens/done_screen/done.dart';
 import 'package:restaurant_athen_app/screens/forgot_password_screen/forgot_password.dart';
@@ -15,9 +16,14 @@ import 'package:restaurant_athen_app/screens/verification_screen/verification.da
 import 'package:restaurant_athen_app/services/pref_services.dart';
 import 'package:restaurant_athen_app/utils/app_res.dart';
 
+Map<String, String>? mpEnLng;
+Map<String, String>? mpGrLng;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefService.init();
+  mpEnLng = await TranslationApi.translationApi("en");
+  mpGrLng = await TranslationApi.translationApi("de");
 
   runApp(
     GetMaterialApp(

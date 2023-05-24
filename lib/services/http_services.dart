@@ -59,4 +59,30 @@ class HttpService {
       return null;
     }
   }
+
+  static Future<http.Response?> deleteApi({
+    required String url,
+    Map<String, String>? header,
+  }) async {
+    try {
+      // String accessToken = PrefService.getString(PrefKeys.token);
+      header ??= {
+        "Accept": "application/json",
+        /* "x-access-token": accessToken,*/
+      };
+
+      if (kDebugMode) {
+        print("Url => $url");
+        print("Header => $header");
+      }
+      return http.delete(
+        Uri.parse(url),
+        headers: header,
+      );
+    } catch (e) {
+      // showToast(e.toString());
+      debugPrint("=============>>>>>> ${e.toString()} <<<<<<<<=======");
+      return null;
+    }
+  }
 }
