@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_athen_app/api_calling/logout_api.dart';
 import 'package:restaurant_athen_app/api_calling/profile_api.dart';
+import 'package:restaurant_athen_app/common/popup.dart';
 import 'package:restaurant_athen_app/screens/signup_screen/signup_controller.dart';
 import 'package:restaurant_athen_app/services/pref_services.dart';
 import 'package:restaurant_athen_app/utils/app_res.dart';
@@ -224,9 +226,12 @@ Widget drawer() {
             color: ColorRes.backgroundColor.withOpacity(0.8),
             child: InkWell(
                 onTap: () async {
+                  await LogoutApi.logoutApi();
+
                   Get.back();
                   PrefService.setValue(PrefKeys.login, false);
                   Get.offNamedUntil(AppRes.loginPage, (route) => false);
+                  flutterToast('Logout Successfully');
                 },
                 child: Row(
                   children: [

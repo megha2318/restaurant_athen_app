@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_athen_app/api_calling/dashboard_obj_api.dart';
+import 'package:restaurant_athen_app/api_calling/un_assign_obj_api.dart';
 import 'package:restaurant_athen_app/models/dashboard_obj_model.dart';
 import 'package:restaurant_athen_app/models/single_obj_model.dart';
 import 'package:restaurant_athen_app/models/task_list_model.dart';
+import 'package:restaurant_athen_app/models/un_assign_obj_model.dart';
 import 'package:restaurant_athen_app/models/work_list_model.dart';
 
 class HomeController extends GetxController {
@@ -14,6 +16,21 @@ class HomeController extends GetxController {
   void calenderOnTap() {}
   RxBool isSearch = false.obs;
   RxBool searchIcon = false.obs;
+
+  List asignad = [];
+
+  addAss() {
+    asignad =
+        List.generate(unAssignObjModel.value.object!.length, (index) => false);
+    update(['asObj']);
+  }
+
+  changedAs(int index, bool val) {
+    asignad[index] = val;
+    update(['asObj']);
+  }
+
+  RxBool isAddAssignVal = false.obs;
 
   onTapSearchIcon() {
     if (searchIcon.value == true) {
@@ -74,6 +91,7 @@ class HomeController extends GetxController {
   RxInt? monthInWord;
   RxBool loader = false.obs;
   Rx<DashboardObjModel> dashboardObjModel = DashboardObjModel().obs;
+  Rx<UnAssignObjModel> unAssignObjModel = UnAssignObjModel().obs;
   Rx<WorkListModel> workListModel = WorkListModel().obs;
   Rx<TaskListModel> taskListModel = TaskListModel().obs;
   Rx<SingleObjModel> singleObjModel = SingleObjModel().obs;
@@ -83,7 +101,8 @@ class HomeController extends GetxController {
     super.onInit();
 
     dashboardObjModel.value = await DashboardObjApi.dashboardObjApi();
-
+    unAssignObjModel.value = await UnAssignObjApi.unAssignObjApi();
+    addAss();
     print(dashboardObjModel.value);
   }
 }

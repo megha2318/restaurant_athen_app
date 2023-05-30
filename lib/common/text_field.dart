@@ -158,6 +158,7 @@ Widget textFieldWithoutSuffix({
   String? prefixImg,
   bool? isSuffix,
   String? hintTxt,
+  double? hintFontSize,
   RxBool? obscureTxt,
   RxBool? foreye,
   TextInputType? keyboardType,
@@ -166,7 +167,8 @@ Widget textFieldWithoutSuffix({
   bool? isOnTapTxtFld,
   required TextEditingController controller,
 }) {
-  return SizedBox(
+  return Container(
+    alignment: Alignment.center,
     height: Get.height * 0.07,
     width: Get.width,
     child: (obscureTxt?.value == null)
@@ -179,8 +181,6 @@ Widget textFieldWithoutSuffix({
                 : (loginController.isObscure.value == false)
                     ? true
                     : false,
-            textAlignVertical: TextAlignVertical.center,
-            // expands: true,
             maxLines: 2,
             minLines: 1,
             decoration: InputDecoration(
@@ -188,8 +188,8 @@ Widget textFieldWithoutSuffix({
                 enabled: (isOnTapTxtFld == true) ? false : true,
                 fillColor: ColorRes.white,
                 contentPadding: const EdgeInsets.all(0),
-                constraints:
-                    BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
+                // constraints:
+                //     BoxConstraints.tight(Size(Get.width, Get.height * 0.07)),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(99)),
@@ -206,7 +206,7 @@ Widget textFieldWithoutSuffix({
                 hintText: hintTxt.toString().tr,
                 hintMaxLines: 2,
                 hintStyle: appTextStyle(
-                    fontSize: 12,
+                    fontSize: hintFontSize ?? 12,
                     color: ColorRes.greyClr,
                     fontWeight: FontWeight.w400)),
           )

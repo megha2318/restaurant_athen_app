@@ -27,7 +27,7 @@ class RestaurantAthenScreen extends StatefulWidget {
   RestaurantAthenScreen({Key? key, this.signature, this.reverse})
       : super(key: key);
 
-  String? signature;
+  Image? signature;
   bool? reverse;
 
   @override
@@ -47,22 +47,10 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
     dynamic args = (val == null) ? [] : val[1];
     String clientName = (val == null) ? "" : val[0];
 
-    if (widget.reverse == true) {
+    if (widget.signature != null) {
       setState(() {});
     }
 
-    if (restaurantAthenController.singleObjModel.value.data != null) {
-      if (restaurantAthenController.singleObjModel.value.data?.signature !=
-          []) {
-        // PrefService.setValue(
-        //     "signatureId",
-        //     restaurantAthenController
-        //         .singleObjModel.value.data?.signature?[0].id);
-      }
-
-      //     .signature = widget.signature;
-      // restaurantAthenController.
-    }
     return Scaffold(
       key: _key,
       drawer: drawer(),
@@ -429,15 +417,16 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                             )
                           : const SizedBox(),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.04,
-                    ),
+                    // SizedBox(
+                    //   height: Get.height * 0.04,
+                    // ),
                     Obx(
                       () => (restaurantAthenController
                                   .singleObjModel.value.data ==
                               null)
                           ? const SizedBox()
                           : Container(
+                              margin: EdgeInsets.only(top: Get.height * 0.04),
                               padding: EdgeInsets.only(
                                   left: Get.width * 0.05,
                                   right: Get.width * 0.05,
@@ -657,10 +646,6 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                               ),
                             ),
                     ),
-                    // SizedBox(
-                    //   height: Get.height * 0.04,
-                    // ),
-                    // restaurantAthenController.getInput(),
 
                     Obx(
                       () => (restaurantAthenController
@@ -1066,15 +1051,16 @@ class _RestaurantAthenScreenState extends State<RestaurantAthenScreen> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: (widget.signature != null)
-                                        ? Image.file(File(widget.signature!))
-                                        : Image.file(File(
-                                            restaurantAthenController
+                                        ? widget.signature
+                                        : Image.file(
+                                            File(restaurantAthenController
                                                 .singleObjModel
                                                 .value
                                                 .data!
                                                 .signature![0]
                                                 .signature
-                                                .toString())),
+                                                .toString()),
+                                          ),
 
                                     // CachedNetworkImage(
                                     //   imageUrl: restaurantAthenController

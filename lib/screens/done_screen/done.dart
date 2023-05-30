@@ -63,25 +63,31 @@ class DoneScreen extends StatelessWidget {
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
-                  Text(
-                    (flow == "ps")
-                        ? Strings.yaahSuccessful.tr
-                        : Strings.doneSuccessful.tr,
-                    textAlign: TextAlign.center,
-                    style: appTextStyle(fontSize: 25),
+                  SizedBox(
+                    width: Get.width * 0.5,
+                    child: Text(
+                      (flow == "ps")
+                          ? Strings.yaahSuccessful.tr
+                          : Strings.doneSuccessful.tr,
+                      textAlign: TextAlign.center,
+                      style: appTextStyle(fontSize: 25),
+                    ),
                   ),
                   SizedBox(
                     height: Get.height * 0.005,
                   ),
-                  Text(
-                    (flow == "ps")
-                        ? Strings.successfulPasswordTxt.tr
-                        : Strings.doneTxt.tr,
-                    textAlign: TextAlign.center,
-                    style: appTextStyle(
-                        fontSize: 11,
-                        color: ColorRes.greyClr,
-                        fontWeight: FontWeight.w400),
+                  SizedBox(
+                    width: Get.width * 0.5,
+                    child: Text(
+                      (flow == "ps")
+                          ? Strings.successfulPasswordTxt.tr
+                          : Strings.doneTxt.tr,
+                      textAlign: TextAlign.center,
+                      style: appTextStyle(
+                          fontSize: 11,
+                          color: ColorRes.greyClr,
+                          fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ],
               ),

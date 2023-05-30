@@ -299,6 +299,7 @@ class SignupScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: textFieldWithoutSuffix(
+                                      hintFontSize: 9,
                                       prefixImg: AssetRes.employeeIcon,
                                       hintTxt: Strings.workingHoursWeek,
                                       controller: signupController

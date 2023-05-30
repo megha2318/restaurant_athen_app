@@ -1,6 +1,6 @@
 class EndPoints {
   ///---------------------------------------------- Base url ----------------------------------------------
-  static const baseUrl = 'http://i-ora.dreamspotacademy.com/api';
+  static const baseUrl = 'https://dreamspotacademy.com/public/i-ora/public/api';
 
   static const login = "$baseUrl/employee-app/login";
   static const forgotPassword = "$baseUrl/forgot-password";
@@ -21,4 +21,7 @@ class EndPoints {
   static const deleteProblem = "$baseUrl/problems/";
   static const singleObj = "$baseUrl/dashboard/list-object/";
   static const taskStatusUpdate = "$baseUrl/dashboard/task-status";
+  static const logOut = "$baseUrl/logoutEmployee";
+  static const translation = "$baseUrl/translations";
+  static const unAssignObj = "$baseUrl/dashboard/list-unassign-obj";
 }

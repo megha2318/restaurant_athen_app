@@ -4,87 +4,38 @@
 
 import 'dart:convert';
 
-DashboardObjModel dashboardObjModelFromJson(String str) =>
-    DashboardObjModel.fromJson(json.decode(str));
+UnAssignObjModel unAssignObjModelFromJson(String str) =>
+    UnAssignObjModel.fromJson(json.decode(str));
 
-String dashboardObjModelToJson(DashboardObjModel data) =>
+String unAssignObjModelToJson(UnAssignObjModel data) =>
     json.encode(data.toJson());
 
-class DashboardObjModel {
-  List<Datum>? data;
+class UnAssignObjModel {
+  String? message;
+  List<Object>? object;
 
-  DashboardObjModel({
-    this.data,
+  UnAssignObjModel({
+    this.message,
+    this.object,
   });
 
-  factory DashboardObjModel.fromJson(Map<String, dynamic> json) =>
-      DashboardObjModel(
-        data: json["data"] == null
+  factory UnAssignObjModel.fromJson(Map<String, dynamic> json) =>
+      UnAssignObjModel(
+        message: json["message"],
+        object: json["object"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<Object>.from(json["object"]!.map((x) => Object.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data == null
+        "message": message,
+        "object": object == null
             ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
+            : List<dynamic>.from(object!.map((x) => x.toJson())),
       };
 }
 
-class Datum {
-  int? id;
-  Objects? objects;
-  dynamic startDate;
-  dynamic clientName;
-  dynamic keyNumber;
-  dynamic address;
-  String? hour;
-  dynamic googleMapUrl;
-  String? fromTime;
-  String? at;
-
-  Datum({
-    this.id,
-    this.objects,
-    this.startDate,
-    this.clientName,
-    this.keyNumber,
-    this.address,
-    this.hour,
-    this.googleMapUrl,
-    this.fromTime,
-    this.at,
-  });
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        objects:
-            json["objects"] == null ? null : Objects.fromJson(json["objects"]),
-        startDate: json["start_date"],
-        clientName: json["client_name"],
-        keyNumber: json["key_number"],
-        address: json["address"],
-        hour: json["hour"],
-        googleMapUrl: json["google_map_url"],
-        fromTime: json["from_time"],
-        at: json["at"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "objects": objects?.toJson(),
-        "start_date": startDate,
-        "client_name": clientName,
-        "key_number": keyNumber,
-        "address": address,
-        "hour": hour,
-        "google_map_url": googleMapUrl,
-        "from_time": fromTime,
-        "at": at,
-      };
-}
-
-class Objects {
+class Object {
   int? id;
   String? userId;
   String? clientName;
@@ -106,7 +57,7 @@ class Objects {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  Objects({
+  Object({
     this.id,
     this.userId,
     this.clientName,
@@ -129,7 +80,7 @@ class Objects {
     this.updatedAt,
   });
 
-  factory Objects.fromJson(Map<String, dynamic> json) => Objects(
+  factory Object.fromJson(Map<String, dynamic> json) => Object(
         id: json["id"],
         userId: json["user_id"],
         clientName: json["client_name"],
